@@ -4,7 +4,7 @@
 @grey: #FAFAFA;
 
 html, body {
-	font-family: "Segoe UI", Helvetica, Tahoma;
+	font-family: Calibri, "Open Sans", Verdana, sans-serif;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -29,6 +29,7 @@ td {
 }
 header {
 	color: @neutral;
+	font-family: "Segoe UI", "Open Sans", Helvetica, Tahoma, sans-serif;
 	font-size: 25pt;
 	font-weight: bold;
 	position: fixed;
@@ -39,6 +40,12 @@ header {
 	ul {
 		background-color: white;
 		width: 100%;
+		&.networks {
+			font-weight: 700;
+		}
+		&.rooms {
+			font-weight: 600;
+		}
 	}
 	li {
 		cursor: pointer;
@@ -68,7 +75,6 @@ header #gradient {
 
 #chat {
 	color: #333;
-	font-family: "Calibri";
 	height: 100%;
 	vertical-align: bottom;
 	width: 100%;

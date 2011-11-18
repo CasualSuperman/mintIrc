@@ -1,7 +1,7 @@
-@accent      : #00AEDB;
+@accent	  : #00AEDB;
 @light-accent: fadeout(@accent, 80%);
-@neutral     : #CCCCCC;
-@grey        : #FAFAFA;
+@neutral	 : #CCCCCC;
+@grey		: #FAFAFA;
 
 html, body {
 	font-family: "Segoe UI", Verdana;
@@ -11,48 +11,49 @@ html, body {
 	text-align: center;
 	text-shadow: rgba(0,0,0,0.01) 0 0 1px;
 	* {
-        margin: 0;
-        padding: 0;
-        text-align: left;
-    }
+		margin: 0;
+		padding: 0;
+		text-align: left;
+	}
 }
 td {
-    &::selection {
-	    background: white;
-    }
-    *::selection {
-	    background: @light-accent;
-    }
-    *::selection:window-inactive {
-    	background: desaturate(@light-accent, 100%);
-    }
+	&::selection {
+		background: white;
+	}
+	*::selection {
+		background: @light-accent;
+	}
+	*::selection:window-inactive {
+		background: desaturate(@light-accent, 100%);
+	}
 }
 header {
 	color: @neutral;
 	font-size: 25pt;
 	font-weight: bold;
 	position: fixed;
+	user-select: none;
 	top: 0;
 	width: 100%;
 	z-index: 2;
 	ul {
-        background-color: white;
-	    width: 100%;
-    }
-    li {
-        cursor: pointer;
-        display: inline-block;
-        display: inline;
-        list-style-type: none;
-        margin: 1px 8px;
-        padding: 2px;
-    }
-    li.mention {
-        animation: colors 1.5s linear infinite alternate;
-    }
-    li.active {
-	    color: @accent;	
-    }
+		background-color: white;
+		width: 100%;
+	}
+	li {
+		cursor: pointer;
+		display: inline-block;
+		display: inline;
+		list-style-type: none;
+		margin: 1px 8px;
+		padding: 2px;
+	}
+	li.mention {
+		animation: colors 1.5s linear infinite alternate;
+	}
+	li.active {
+		color: @accent;	
+	}
 }
 header #gradient {
 	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMCIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -71,35 +72,35 @@ header #gradient {
 	height: 100%;
 	vertical-align: bottom;
 	width: 100%;
-    #log {
-	    border-spacing: 0;
-	    padding-bottom: 1.5em;
-        .author {
-            color: #666;
-            padding-left: 4px;
-            padding-right: 1em;
-            text-align: right;
-            vertical-align: top;
-        }
-        .me {
-            color: black;
-        }
-        .mention {
-            color: @accent;
-        }
-        .room {
-            color: @accent;
-            font-weight: bold;
-        }
-        .status {
-            color: #666;
-            td {
-                background-color: @grey;
-                border-top: 4px solid @grey;
-                vertical-align: baseline;
-            }
-        }
-    }
+	#log {
+		border-spacing: 0;
+		padding-bottom: 1.5em;
+		.author {
+			color: #666;
+			padding-left: 4px;
+			padding-right: 1em;
+			text-align: right;
+			vertical-align: top;
+		}
+		.me {
+			color: black;
+		}
+		.mention {
+			color: @accent;
+		}
+		.room {
+			color: @accent;
+			font-weight: bold;
+		}
+		.status {
+			color: #666;
+			td {
+				background-color: @grey;
+				border-top: 4px solid @grey;
+				vertical-align: baseline;
+			}
+		}
+	}
 }
 
 #talk {
@@ -109,21 +110,21 @@ header #gradient {
 	font-size: 1.5em;
 	position: fixed;
 	width: 100%;
-    &:focus {
-        background-color: #DDD;
-        outline: none;
-    }
+	&:focus {
+		background-color: #DDD;
+		outline: none;
+	}
 }
 
 @keyframes colors {
-    from {
-        color: inherit;
-        text-shadow: 0 0 5px fadeout(@accent, 100%);
-    }
-    to {
-        color: @accent;
-        text-shadow: 0 0 5px fadeout(@accent, 60%);
-    }
+	from {
+		color: inherit;
+		text-shadow: 0 0 5px fadeout(@accent, 100%);
+	}
+	to {
+		color: @accent;
+		text-shadow: 0 0 5px fadeout(@accent, 60%);
+	}
 }
 
 //Metro Black : #000000

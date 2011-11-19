@@ -44,6 +44,7 @@ header {
 			font-weight: 700;
 		}
 		&#rooms {
+			font-size: 0.75em;
 			font-weight: 400;
 		}
 	}
@@ -54,12 +55,19 @@ header {
 		list-style-type: none;
 		margin: 1px 8px;
 		padding: 2px;
-	}
-	li.mention {
-		animation: colors 1.5s linear infinite alternate;
-	}
-	li.active {
-		color: @accent;	
+		&.mention {
+			animation: colors 1.5s linear infinite alternate;
+		}
+		&.active {
+			color: @accent;	
+		}
+		&.nonitem {
+			margin-left: 0;
+			padding-left: 0;
+			&:hover {
+				color: @accent;
+			}
+		}
 	}
 }
 header #gradient {
@@ -67,11 +75,6 @@ header #gradient {
 	height: 25px;
 	width: 100%;
 }
-#rooms {
-	font-size: 0.75em;
-	font-weight: normal;
-}
-
 #chat {
 	color: #333;
 	height: 100%;

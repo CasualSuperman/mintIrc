@@ -2,7 +2,7 @@
 
 function resize() {
 	var offset = document.getElementsByTagName("header")[0].clientHeight;
-	document.getElementById("log").style.paddingTop = (offset - 10) + "px";
+	document.getElementById("log").style.paddingTop = (offset) + "px";
 }
 function ready() {
 	resize();

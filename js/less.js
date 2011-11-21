@@ -145,7 +145,7 @@ if (typeof environment === "object" && ({}).toString.call(environment) === "[obj
     // Node.js
     less = exports,
     tree = require('./tree');
-    less.mode = 'rhino';
+    less.mode = 'node';
 } else {
     // Browser
     if (typeof(window.less) === 'undefined') { window.less = {} }
@@ -1868,9 +1868,7 @@ tree.JavaScript.prototype = {
         }
        if (typeof(result) === 'string') {
             var match;
-            if (match = /^(-?\d*\.?\d+)(px|%|em|pc|ex|in|deg|s|ms|pt|cm|mm|rad|grad|turn)?/.exec(result)) {
-                return new (tree.Dimension)(match[1], match[2]);
-            } else if (match = /^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})/.exec(result)) {
+            if (match = /^#([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/.exec(result)) {
                 return new(tree.Color)(match[1]);
             }
             return new(tree.Quoted)('"' + result + '"', result, this.escaped, this.index);
@@ -2445,7 +2443,6 @@ var isFileProtocol = (location.protocol === 'file:'    ||
 less.env = less.env || (location.hostname == '127.0.0.1' ||
                         location.hostname == '0.0.0.0'   ||
                         location.hostname == 'localhost' ||
-                        location.hostname == 'radish'    ||
                         location.port.length > 0         ||
                         isFileProtocol                   ? 'development'
                                                          : 'production');

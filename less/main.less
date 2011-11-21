@@ -7,10 +7,10 @@
 //Metro Red : #D11141
 //Metro Yellow : #FFC425
 /* Accent Colors */
-@accent:       #EC098C;
+@accent:       `Metro.ui.accentColor`;
 @light-accent: fadeout(@accent, 80%);
 /* Content Colors */
-@background: #FFF;
+@background: `Metro.ui.backgroundColor`;
 
 // This is the color that text items in the header should be.
 @header-amount: 80;
@@ -65,7 +65,7 @@ header {
 	width: 100%;
 	z-index: 2;
 	ul {
-		//background-color: white;
+		background-color: @background;
 		width: 100%;
 		&#networks {
 			font-weight: 700;

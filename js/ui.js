@@ -25,6 +25,13 @@ function stickToBottom() {
 	setTimeout(stickToBottom, 300);
 }
 
-ready();
+window.onload = ready;
 
 })();
+
+Metro = {
+	ui:{
+		accentColor: "#00AEDB",
+		backgroundColor: "#FFF"
+	}
+};

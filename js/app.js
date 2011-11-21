@@ -58,16 +58,14 @@ $("#networks .nonitem").click(function() {
     div.append(header);
     for (var bg in colors.bg) {
         div.append($("<div/>").data("color", colors.bg[bg]).css({margin: "2px", float: "left", width: "10px", height: "10px", backgroundColor: colors.bg[bg], padding: "2px", border: "1px solid #666"}).click(function() {
-            Metro.ui.backgroundColor = $(this).data("color");
-            less.refresh(true);
+            Metro.ui.updateBackground($(this).data("color"));
         }));
     }
     header = $("<h4/>").text("Colors:").css("clear", "left");
     div.append(header);
     for (var fg in colors.fg) {
         div.append($("<div/>").data("color", colors.fg[fg]).css({margin: "2px", float: "left", width: "10px", height: "10px", backgroundColor: colors.fg[fg], padding: "2px", border: "1px solid #666"}).click(function() {
-            Metro.ui.accentColor = $(this).data("color");
-            less.refresh(true);
+            Metro.ui.updateAccent($(this).data("color"));
         }));
     }
     div.append($("<br/>").css("clear", "left"));

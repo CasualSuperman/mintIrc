@@ -32,6 +32,23 @@ window.onload = ready;
 Metro = {
 	ui:{
 		accentColor: "#00AEDB",
-		backgroundColor: "#FFF"
+		backgroundColor: "#FFF",
+        updateAccent: function(color) {
+            this.accentColor = color;
+            this._update();
+        },
+        updateBackground: function(color) {
+            this.backgroundColor = color;
+            this._update();
+        },
+        _update: function() {
+            $("body").addClass("transition");
+            less.refresh(true);
+            StyleFix.process();
+            setTimeout(function(){
+                $("body").removeClass("transition");
+            }, this.transitionLength);
+        },
+        transitionLength: 500
 	}
 };

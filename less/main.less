@@ -1,9 +1,36 @@
-@accent: #00AEDB;
+//Metro Black : #000000
+//Metro Blue : #00AEDB
+//Metro Green : #00B159
+//Metro Orange : #F37735
+//Metro Pink : #EC098C
+//Metro Purple : #7C4199
+//Metro Red : #D11141
+//Metro Yellow : #FFC425
+/* Accent Colors */
+@accent:       #EC098C;
 @light-accent: fadeout(@accent, 80%);
-@neutral: #CCCCCC;
-@grey: #FAFAFA;
+/* Content Colors */
+@background: #FFF;
+
+// This is the color that text items in the header should be.
+@header-amount: 80;
+@header-grey: (@background / 100 * @header-amount) + ((#FFF - @background) / 100 * (100 - @header-amount));
+
+// This is the color for text items in the main content.
+@amount: 40;
+@content-grey: (@background / 100 * @amount) + ((#FFF - @background) / 100 * (100 - @amount));
+
+// The color for content text
+@content-amount: 20; // Text is 20% the background color
+@content: (@background / 100 * @content-amount) + ((#FFF - @background) / 100 * (100 - @content-amount));
+
+// This is the background color for UI elements
+@grey-amount: 90; // @grey is 90% the background color
+@grey: (@background / 100 * @grey-amount) + ((#FFF - @background) / 100 * (100 - @grey-amount));
+
 
 html, body {
+	background-color: @background;
 	font-family: Calibri, "Open Sans", Verdana, sans-serif;
 	height: 100%;
 	margin: 0;
@@ -18,7 +45,7 @@ html, body {
 }
 td {
 	&::selection {
-		background: white;
+		background: @background;
 	}
 	*::selection {
 		background: @light-accent;
@@ -28,7 +55,7 @@ td {
 	}
 }
 header {
-	color: @neutral;
+	color: @header-grey;
 	font-family: "Segoe UI", "Open Sans", Helvetica, Tahoma, sans-serif;
 	font-size: 25pt;
 	font-weight: bold;
@@ -38,7 +65,7 @@ header {
 	width: 100%;
 	z-index: 2;
 	ul {
-		background-color: white;
+		//background-color: white;
 		width: 100%;
 		&#networks {
 			font-weight: 700;
@@ -71,12 +98,12 @@ header {
 	}
 }
 header #gradient {
-	background: linear-gradient(top, #FFF 0%, fadeout(#FFF, 100%) 100%);
+	background: linear-gradient(top, @background 0%, fadeout(@background, 100%) 100%);
 	height: 25px;
 	width: 100%;
 }
 #chat {
-	color: #333;
+	color: @content;
 	height: 100%;
 	vertical-align: bottom;
 	width: 100%;
@@ -86,13 +113,13 @@ header #gradient {
 		padding-left: 0.5em;
 		padding-right: 0.5em;
 		.author {
-			color: #666;
+			color: @content-grey;
 			padding-right: 1em;
 			text-align: right;
 			vertical-align: top;
 		}
 		.me {
-			color: black;
+			color: #FFF - @background;
 		}
 		.mention {
 			color: @accent;
@@ -102,7 +129,7 @@ header #gradient {
 			font-weight: bold;
 		}
 		.status {
-			color: #666;
+			color: @content-grey;
 			td {
 				background-color: @grey;
 				border-top: 4px solid @grey;
@@ -113,14 +140,14 @@ header #gradient {
 }
 
 #talk {
-	background-color: #EEE;
+	background-color: @grey;
 	border-style: none;
 	bottom: 0;
 	font-size: 1.5em;
 	position: fixed;
 	width: 100%;
 	&:focus {
-		background-color: #DDD;
+		background-color: fadeout(@grey, 10%);
 		outline: none;
 	}
 }
@@ -136,11 +163,3 @@ header #gradient {
 	}
 }
 
-//Metro Black : #000000
-//Metro Blue : #00AEDB
-//Metro Green : #00B159
-//Metro Orange : #F37735
-//Metro Pink : #EC098C
-//Metro Purple : #7C4199
-//Metro Red : #D11141
-//Metro Yellow : #FFC425

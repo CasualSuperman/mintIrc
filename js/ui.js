@@ -5,7 +5,11 @@ function resize() {
 	document.getElementById("log").style.paddingTop = (offset) + "px";
 }
 function ready() {
-	resize();
+    try {
+	    resize();
+    } catch (err){
+
+    }
 //	stickToBottom();
 }
 

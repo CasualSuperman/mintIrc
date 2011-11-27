@@ -5,3 +5,4 @@ This project uses projects licensed under the Apache and MIT licenses.
 
 * RecursiveForest/goty
 * nu7hatch/webrocket
+* andris9/jStorage

@@ -8,6 +8,8 @@
 $(document).ready(function() {
     var container = $("#load");
     for (var i = 0; i < 5; i++) {
-        container.append($("<div/>").addClass("load").attr("id", "load-" + i));
+        setTimeout(function() {
+            container.append($("<div/>").addClass("load"));
+        }, 400 * i);
     }
 });

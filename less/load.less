@@ -33,12 +33,17 @@ html, body {
 		text-align: left;
 	}
 }
+div#load {
+    height: 100%;
+    position: relative;
+}
+@size: 6px;
 div.load {
-    @size: 6px;
-    animation: loading 4s infinite;
-    animation-timing-function: cubic-bezier(0.1, 0.7, 0.9, 0.3);
+    animation: loading 4s cubic-bezier(0.1, 0.8, 0.9, 0.2) 0 infinite,
+               spacing 4s linear                           0 infinite;
     background-color: @accent;
     border-radius: 50%;
+    float: left;
     height: @size;
     position: absolute;
     top: 50%;
@@ -52,4 +57,11 @@ div.load {
         left: 100%;
 	}
 }
-
+@keyframes spacing {
+    from {
+        margin-left: @size * -1;
+    }
+    to {
+        margin-left: 0;
+    }
+}

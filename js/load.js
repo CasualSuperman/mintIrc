@@ -7,7 +7,7 @@
  */
 $(document).ready(function() {
     var container = $("#load");
-    for (var i = 0; i < 5; i++) {
+    for (var i = 5; i >= 1; i--) {
         setTimeout(function() {
             container.append($("<div/>").addClass("load"));
         }, 400 * i);

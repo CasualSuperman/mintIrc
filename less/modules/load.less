@@ -2,10 +2,8 @@
 .load {
     background-color: fadeout(@background, 30%);
     height: 100%;
-    left: 0;
+    position: absolute;
     overflow: hidden;
-    position: fixed;
-    top: 0;
     width: 100%;
     z-index: 5;
     
@@ -16,9 +14,11 @@
         border-radius: 50%;
         float: left;
         height: @size;
+        margin-left: @size * -1;
         position: absolute;
         top: 50%;
         width: @size;
+
         @delay: 400ms;
         &.dot1 {
             animation-delay: 0 * @delay;

@@ -8,8 +8,6 @@
 $(document).ready(function() {
     var container = $(".load");
     for (var i = 5; i >= 1; i--) {
-        setTimeout(function() {
-            container.append($("<div/>").addClass("dot"));
-        }, 400 * i);
+        container.append($("<div/>").addClass("dot").addClass("dot" + i));
     }
 });

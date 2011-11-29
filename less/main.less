@@ -1,56 +1,12 @@
-/* Accent Colors */
-@accent:       `Metro.ui.accentColor`;
-@light-accent: fadeout(@accent, 80%);
-/* Content Colors */
-@background: `Metro.ui.backgroundColor`;
-
-// This is the color that text items in the header should be.
-@header-amount: 65;
-@header-grey: (@background / 100 * @header-amount) + ((#FFF - @background) / 100 * (100 - @header-amount));
-
-// This is the color for text items in the main content.
-@amount: 40;
-@content-grey: (@background / 100 * @amount) + ((#FFF - @background) / 100 * (100 - @amount));
-
-// The color for content text
-@content-amount: 20; // Text is 20% the background color
-@content: (@background / 100 * @content-amount) + ((#FFF - @background) / 100 * (100 - @content-amount));
-
-// This is the background color for UI elements
-@grey-amount: 90; // @grey is 90% the background color
-@grey: (@background / 100 * @grey-amount) + ((#FFF - @background) / 100 * (100 - @grey-amount));
-
+@import "colors.less";
+@import "base.less";
+@import "layout.less";
 @import "modules/load.less";
 @import "state/loading.less";
 
-html, body {
-	background-color: @background;
-	font-family: Calibri, "Open Sans", Verdana, sans-serif;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	text-align: center;
-	text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-	* {
-		margin: 0;
-		padding: 0;
-		text-align: left;
-	}
-}
 .testing {
 	background-color: @background;
 	color: @content;
-}
-td {
-	&::selection {
-		background: @background;
-	}
-	*::selection {
-		background: @light-accent;
-	}
-	*::selection:window-inactive {
-		background: desaturate(@light-accent, 100%);
-	}
 }
 header {
 	color: @header-grey;
@@ -62,6 +18,13 @@ header {
 	top: 0;
 	width: 100%;
 	z-index: 2;
+
+    & #gradient {
+        background: linear-gradient(top, @background 0%, fadeout(@background, 100%) 100%);
+        height: 25px;
+        width: 100%;
+    }
+
 	ul {
 		background-color: @background;
 		width: 100%;
@@ -73,6 +36,7 @@ header {
 			font-weight: 400;
 		}
 	}
+
 	li {
 		cursor: pointer;
 		display: inline-block;
@@ -94,11 +58,6 @@ header {
 			}
 		}
 	}
-}
-header #gradient {
-	background: linear-gradient(top, @background 0%, fadeout(@background, 100%) 100%);
-	height: 25px;
-	width: 100%;
 }
 #chat {
 	color: @content;

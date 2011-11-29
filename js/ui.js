@@ -2,7 +2,7 @@
 
 function resize() {
 	var offset = document.getElementsByTagName("header")[0].clientHeight;
-	document.getElementById("log").style.marginTop = (offset) + "px";
+	document.getElementById("chat").style.marginTop = (offset) + "px";
 }
 function ready() {
     try {

@@ -9,7 +9,7 @@
 })();
 
 Metro = {
-	ui:{
+    ui:{
         accents: {
             blue: "#00AEDB",
             green: "#00B159",
@@ -23,9 +23,6 @@ Metro = {
             black: "#000",
             white: "#FFF"
         },
-		accentColor: Metro.ui.accents.blue,
-		backgroundColor: Metro.ui.backgrounds.white,
-        transitionLength: 500
 
         updateAccent: function(color) {
             this.accentColor = color;
@@ -43,5 +40,10 @@ Metro = {
                 $("body").removeClass("transition");
             }, this.transitionLength);
         },
-	}
+        config: {
+            accentColor: Metro.ui.accents.blue,
+            backgroundColor: Metro.ui.backgrounds.white,
+            transitionLength: 500
+        }
+    }
 };

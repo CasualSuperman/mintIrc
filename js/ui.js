@@ -1,42 +1,32 @@
 (function (){
-
-function resize() {
-	var offset = document.getElementsByTagName("header")[0].clientHeight;
-	document.getElementById("chat").style.marginTop = (offset) + "px";
-}
-function ready() {
-    try {
-	    resize();
-    } catch (err){
-
+    window.onload = function() {
+        resize();
     }
-//	stickToBottom();
-}
-
-function stickToBottom() {
-	var maxSize = document.getElementById("chat").clientHeight;
-	var log = document.getElementById("log");
-	var defaultSize = log.clientHeight - log.style.paddingTop.split("px")[0];
-	var marginSize  = log.style.marginTop.split("px")[0];
-	if(defaultSize > maxSize) {
-		var offset = document.getElementsByTagName("header")[0].clientHeight;
-		offset -= document.getElementById("gradient").clientHeight / 2;
-		log.style.paddingTop = offset + "px";
-	} else {
-		var val = maxSize - defaultSize - marginSize;
-		log.style.paddingTop = val + "px";
-	}
-	setTimeout(stickToBottom, 300);
-}
-
-window.onload = ready;
-
+    function resize() {
+        var offset = document.getElementsByTagName("header")[0].clientHeight;
+        document.getElementById("chat").style.marginTop = (offset) + "px";
+    }
 })();
 
 Metro = {
 	ui:{
-		accentColor: "#00AEDB",
-		backgroundColor: "#FFF",
+        accents: {
+            blue: "#00AEDB",
+            green: "#00B159",
+            orange: "#F37735",
+            pink: "#EC098C",
+            purple: "#7C4199",
+            red: "#D11141",
+            yellow: "#FFC425"
+        },
+        backgrounds: {
+            black: "#000",
+            white: "#FFF"
+        },
+		accentColor: Metro.ui.accents.blue,
+		backgroundColor: Metro.ui.backgrounds.white,
+        transitionLength: 500
+
         updateAccent: function(color) {
             this.accentColor = color;
             this._update();
@@ -53,6 +43,5 @@ Metro = {
                 $("body").removeClass("transition");
             }, this.transitionLength);
         },
-        transitionLength: 500
 	}
 };

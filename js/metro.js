@@ -11,12 +11,12 @@ Metro = {
 
         return {
             accents: {
-                blue: "#00AEDB",
-                green: "#00B159",
+                blue:   "#00AEDB",
+                green:  "#00B159",
                 orange: "#F37735",
-                pink: "#EC098C",
+                pink:   "#EC098C",
                 purple: "#7C4199",
-                red: "#D11141",
+                red:    "#D11141",
                 yellow: "#FFC425"
             },
             backgrounds: {

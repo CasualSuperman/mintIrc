@@ -1,0 +1,3 @@
+var Status = Message.extend({
+    
+});

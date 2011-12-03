@@ -15,8 +15,50 @@
 		<link rel="stylesheet/less" type="text/css" href="less/main.less" media="screen" />
 		<script src="js/less.js"></script>
 		<script src="js/prefix-free.js"></script>
+		<style>
+			body, html {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+			.top {
+				background-color: #aaa;
+				position: absolute;
+				top: 0;
+				right: 0;
+				left: 0;
+				height: 59px;
+			}
+			.container {
+				position: absolute;
+				
+				top: 59px;
+				bottom: 0;
+				left: 0;
+				right: 0;
+
+				overflow-x: hidden;
+				overflow-y: scroll;
+			}
+			.log {
+				height: 1000px;
+				width: 100%;
+			}
+		</style>
 	</head>
 <body>
+	<div class="top">
+	</div>
+	<div class="container">
+		<div class="log">
+		</div>
+	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.js"></script>
 	<script src="js/app.js"></script>
 </body>

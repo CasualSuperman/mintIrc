@@ -1,4 +1,9 @@
 var Room = Backbone.Model.extend({
+
+    messages: new MessageList,
+    topic: "",
+    users: new UserList,
+
     initialize: function(defaults){
         if (!defaults) {
             throw "IllegalConstructArgs";
@@ -12,6 +17,5 @@ var Room = Backbone.Model.extend({
         _.each(defaults, function(val, attr) {
            this[attr] = val;
         }, this);
-        this.messages = new MessageList;
     }
 });

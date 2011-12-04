@@ -1,10 +1,13 @@
 var Connection = Backbone.Model.extend({
 
+    rooms: new RoomList,
+
     initialize: function(defaults){
         if (!defaults) {
             throw "IllegalConstructArgs";
         }
-        var required = ["name", "addr"];
+
+        var required = ["name", "addr", "nick"];
         _.each(required, function(attr) {
             if (!defaults[attr]) {
                 throw "IllegalConstructArgs";
@@ -15,6 +18,4 @@ var Connection = Backbone.Model.extend({
            this[attr] = val;
         }, this);
     }
-
-    rooms: new RoomList
 });

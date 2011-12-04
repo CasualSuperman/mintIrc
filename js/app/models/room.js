@@ -7,9 +7,10 @@ var Room = Backbone.Model.extend({
         _.each(required, function(attr) {
             if (!defaults[attr]) {
                 throw "IllegalConstructArgs";
-            } else {
-               this[attr] = defaults[attr]; 
             }
+        }, this);
+        _.each(defaults, function(val, attr) {
+           this[attr] = val;
         }, this);
         this.messages = new MessageList;
     }

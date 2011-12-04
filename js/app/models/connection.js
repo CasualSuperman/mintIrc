@@ -6,10 +6,11 @@ var Connection = Backbone.Model.extend({
         var required = ["name", "addr"];
         _.each(required, function(attr) {
             if (!defaults[attr]) {
-                throw "IllegalConstructArgs";
-            } else {
-               this[attr] = defaults[attr]; 
+                throw "illegalconstructargs";
             }
+        }, this);
+        _.each(defaults, function(val, attr) {
+           this[attr] = val;
         }, this);
         this.rooms = new RoomList;
     }

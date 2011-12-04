@@ -20,8 +20,8 @@ Metro = {
                 yellow: "#FFC425"
             },
             backgrounds: {
-                black: "#000",
-                white: "#FFF"
+                black: "#000000",
+                white: "#FFFFFF"
             },
 
             updateAccent: function(color) {
@@ -31,12 +31,14 @@ Metro = {
             updateBackground: function(color) {
                 this.backgroundColor = color;
                 _update();
-            },
-            config: {
-                accentColor: Metro.ui.accents.blue,
-                backgroundColor: Metro.ui.backgrounds.white,
-                transitionLength: 500
             }
         }
     })()
 };
+Metro.ui.config = (function() {
+    return {
+        accentColor: Metro.ui.accents.blue,
+        backgroundColor: Metro.ui.backgrounds.white,
+        transitionLength: 500
+    }
+})();

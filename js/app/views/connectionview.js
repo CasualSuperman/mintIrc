@@ -1,5 +1,6 @@
 var ConnectionView = Backbone.View.extend({
     tagName: "header",
+    className: "connection-list",
 
     conns: new ConnectionList,
 
@@ -13,7 +14,7 @@ var ConnectionView = Backbone.View.extend({
     },
 
     render: function() {
-        this.el = this.make(this.tagName);
+        this.el = this.make(this.tagName, {class: this.className});
         this.el.appendChild(this.renderList());
         this.el.appendChild(this.renderActiveList());
         this.el.appendChild(this.make("div", {id: "gradient"}));

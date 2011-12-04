@@ -28,7 +28,7 @@ new Room({
     mention: true
 })]).each(function(room){
     App.chat.conns.find(function(conn) {
-        return conn.name === "foonetic";
+        return conn.get("name") === "foonetic";
     }).rooms.add(room);
 });
 App.chat.conns.add(new Connection({

@@ -24,9 +24,9 @@ var ConnectionView = Backbone.View.extend({
         var ul = this.make("ul", {className: "connList"});
         this.conns.forEach(function(conn) {
             var li = this.make("li", {}, conn.name);
-            if (conn.active) {
+            if (conn.get("active")) {
                 li.className = "active";
-            } else if (conn.mention) {
+            } else if (conn.get("mention")) {
                 li.className = "mention";
             }
             ul.appendChild(li);
@@ -52,9 +52,9 @@ var ConnectionView = Backbone.View.extend({
         active.rooms.forEach(function(room) {
                 var li = document.createElement("li");
                 li.appendChild(document.createTextNode(room.name));
-                if (room.active) {
+                if (room.get("active")) {
                     li.className = "active";
-                } else if (room.mention) {
+                } else if (room.get("mention")) {
                     li.className = "mention";
                 }
                 ul.appendChild(li);

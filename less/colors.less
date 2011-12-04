@@ -1,6 +1,3 @@
-/* Accent Colors */
-@accent:       `Metro.ui.config.accentColor`;
-@light-accent: fadeout(@accent, 80%);
 /* Content Colors */
 @background: `Metro.ui.config.backgroundColor`;
 
@@ -19,3 +16,14 @@
 // This is the background color for UI elements
 @grey-amount: 90; // @grey is 90% the background color
 @grey: (@background / 100 * @grey-amount) + ((#FFF - @background) / 100 * (100 - @grey-amount));
+
+/* Accent Colors */
+@accent:       `Metro.ui.config.accentColor`;
+@light-accent: fadeout(@accent, 80%);
+.accent {
+    color: @accent;
+}
+
+.background {
+    background-color: @background;
+}

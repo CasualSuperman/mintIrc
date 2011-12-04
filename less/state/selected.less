@@ -1,0 +1,10 @@
+:not(.is-selectable)::selection {
+    background: inherit;
+}
+
+.is-selectable::selection {
+    background: @light-accent;
+}
+.is-selectable::selection:window-inactive {
+    background: desaturate(@light-accent, 100%);
+}

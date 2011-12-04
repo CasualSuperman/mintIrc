@@ -2,16 +2,17 @@ var ConnectionView = Backbone.View.extend({
     tagName: "header",
     className: "connection-list",
 
-    conns: new ConnectionList,
-
-    initialize: function() {
+    initialize: function(list) {
         _.bindAll(this, "render", "add");
+        this.conns = list;
         this.conns.bind("all", this.render);
     },
 
     add: function() {
 
     },
+
+    conns: null,
 
     render: function() {
         this.el = this.make(this.tagName, {class: this.className});

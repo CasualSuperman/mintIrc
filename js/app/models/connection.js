@@ -3,7 +3,7 @@ var Connection = Backbone.Model.extend({
         if (!defaults) {
             throw "IllegalConstructArgs";
         }
-        var required = ["name"];
+        var required = ["name", "addr"];
         _.each(required, function(attr) {
             if (!defaults[attr]) {
                 throw "IllegalConstructArgs";

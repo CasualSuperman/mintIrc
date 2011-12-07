@@ -1,9 +1,12 @@
 var Message = Backbone.Model.extend({
+    sender: null,
+    text: null,
+
     initialize: function(defaults){
         if (!defaults) {
             throw "IllegalConstructArgs";
         }
-        var required = ["name", "text"];
+        var required = ["sender", "text"];
         _.each(required, function(attr) {
             if (!defaults[attr]) {
                 throw "IllegalConstructArgs";

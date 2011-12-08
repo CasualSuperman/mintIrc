@@ -1,11 +1,15 @@
 Metro = {
     ui: (function() {
         function _update() {
-            $("body").addClass("transition");
+            var className = document.body.className;
+            if (classname === undefined || className === "")
+                document.body.className = "transition";
+            else
+                document.body.className += " transition";
             less.refresh(true);
             StyleFix.process();
             setTimeout(function(){
-                $("body").removeClass("transition");
+                document.body.className = className;
             }, Metro.ui.config.transitionLength);
         };
 

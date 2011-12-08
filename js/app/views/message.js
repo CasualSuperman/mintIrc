@@ -4,8 +4,8 @@ var MessageView = Backbone.View.extend({
 
     template: _.template("<td class='sender'><%-sender%></td><td class='message'><%-text%></td>"),
 
-    events: {
-        "click .sender" : "userInfo",
+    initialize: function() {
+        this.render();
     },
 
     render: function() {
@@ -16,5 +16,6 @@ var MessageView = Backbone.View.extend({
             text: this.model.text,
             sender: this.model.sender
         });
+        return this;
     }
 });

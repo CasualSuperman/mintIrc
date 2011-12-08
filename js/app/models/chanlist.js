@@ -1,3 +1,3 @@
-var ChannelList = Backbone.Collection.extend({
+var ChanList = Backbone.Collection.extend({
     model: Chan
 });

@@ -6,6 +6,7 @@ var ChanMsgView = Backbone.View.extend({
         "click .sender" : "userInfo",
     },
     initialize: function() {
+        // Expects model to be a MessageList
         this.model.bind('add', this.render, this);
     },
     render: function() {

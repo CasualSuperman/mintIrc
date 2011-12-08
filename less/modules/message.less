@@ -1,0 +1,44 @@
+tr {
+    // Message Lines
+    &.message {
+
+    }
+    &.status {
+        color: @content-grey;
+
+        td {
+            background-color: @grey;
+            border-top: 4px solid @grey;
+            color: @content-grey;
+            width: 0;
+
+            &.message {
+                width: 100%;
+            }
+        }
+    }
+
+    // Messages
+    td {
+        vertical-align: top;
+
+        &.sender {
+            color: @content-grey;
+            padding-right: 1em;
+            text-align: right;
+
+            &.mention {
+                .accent;
+            }
+            &.me {
+                color: #FFF - @background;
+            }
+        }
+        &.message {
+            &.room {
+                .accent;
+                font-weight: bold;
+            }
+        }
+    }
+}

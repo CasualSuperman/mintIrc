@@ -11,6 +11,9 @@ var MessageView = Backbone.View.extend({
     render: function() {
         if (this.model.sender === null) {
             this.el.className = "message status";
+            if (this.model.mono) {
+                this.el.className += " mono";
+            }
         }
         this.el.innerHTML = this.template({
             text: this.model.text,

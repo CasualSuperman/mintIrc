@@ -1,6 +1,7 @@
 var Message = Backbone.Model.extend({
     sender: null,
     text: null,
+    mono: false,
 
     initialize: function(defaults){
         if (!defaults) {

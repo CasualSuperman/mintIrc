@@ -5,35 +5,32 @@
  *
  * Date: Thu Apr 07 14:26:07 2011 -0500
  */
-(function() {
-window.App = new Irc();
-document.body.appendChild(App.el);
-})();
-
-App.chat.conns.add(new Connection({
+var Conns = new ServerList;
+Conns.add(new Server({
         name: "foonetic",
-        active: true,
-        addr: "irc.foonetic.net:6667"
+        addr: "irc.foonetic.net:6667",
+        nick: "CasualSuperman"
     })
 );
-_([new Room({
+_([new Chan({
     name: "#ufeff",
-    active: true
 }),
-new Room({
+new Chan({
     name: "#xkcd"
 }),
-new Room({
+new Chan({
     name: "#xkcd-minecraft",
-    mention: true
 })]).each(function(room){
-    App.chat.conns.find(function(conn) {
-        return conn.get("name") === "foonetic";
-    }).rooms.add(room);
+    Conns.first().chans.add(room);
 });
-App.chat.conns.add(new Connection({
+Conns.add(new Server({
         name: "freenode",
-        addr: "irc.freenode.org:6667"
+        addr: "irc.freenode.org:6667",
+        nick: "CasualSuperman"
     })
 );
-App.render();
+
+(function() {
+window.App = new Irc({el: document.body, serverList: Conns});
+})();
+

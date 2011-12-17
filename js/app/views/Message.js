@@ -1,12 +1,10 @@
-var MessageView = (function() {
-    return function(msg) {
-        if (arguments.length !== 1) {
-            throw "IllegalArgCount";
-        }
-        this.msg = msg;
-        this.el = this._toNode();
-    };
-}());
+var MessageView = function(msg) {
+    if (arguments.length !== 1) {
+        throw "IllegalArgCount";
+    }
+    this.msg = msg;
+    this.el = this._toNode();
+};
 
 
 MessageView.prototype._toNode = function() {
@@ -15,14 +13,22 @@ MessageView.prototype._toNode = function() {
         util.clear(el);
     } else {
         var tr = util.template("tr");
-        el = (this.msg.mono) ?                 tr("message status mono") :
-             (this.msg.author === undefined) ? tr("message status") :
-                                               tr("message");
+        var classes = ["message"];
+        if (this.msg.mono) {
+            classes.push("mono");
+        }
+        if (this.msg.author === undefined) {
+            classes.push("status");
+        }
+        el = tr(classes);
         var td = util.template("td");
         var time   = td("time",    this.msg.time);
         var author = td("sender",  this.msg.author);
         var text   = td("message", this.msg.text);
 
+        util.each([time, author, text], function(elem) {
+            el.appendChild(elem);
+        });
         this.el = el;
     }
     return el;

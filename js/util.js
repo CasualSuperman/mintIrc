@@ -5,21 +5,23 @@
 
     function create(name, classes, contents) {
         var elem;
-        switch (4 - arguments.length) {
-            case 1:
-                elem = document.createElement(name);
-            case 2:
-                if (classes.constructor.name === "Array") {
-                    elem.className = classes.join(" ");
-                } else {
-                    elem.className = classes;
-                }
-            case 3:
-                if (contents instanceof HTMLElement) {
-                    elem.appendChild(contents);
-                } else {
-                    elem.appendChild(document.createTextNode(contents));
-                }
+        var args = arguments.length;
+        if (args >= 1) {
+            elem = document.createElement(name);
+        }
+        if (args >= 2) {
+            if (classes.constructor.name === "Array") {
+                elem.className = classes.join(" ");
+            } else {
+                elem.className = classes;
+            }
+        }
+        if (args >= 3) {
+            if (contents instanceof HTMLElement) {
+                elem.appendChild(contents);
+            } else {
+                elem.appendChild(document.createTextNode(contents));
+            }
         }
         return elem;
     }
@@ -62,8 +64,22 @@
         done();
     }
 
+    function each(list, func, context) {
+        var args = arguments.length;
+        if (args > 3 || args < 2) {
+            throw "IllegalArgumentException";
+        }
+        for (var i = 0, len = list.length; i < len; ++i) {
+            var binder = context || list[i];
+            func.call(binder, list[i]);
+        }
+    }
+
     util.create = create;
     util.template = template;
+    util.each = each;
+    util.clear = clear;
+    util.hide = hide;
     util.noConflict = function() {
         window['util'] = old;
         return util;

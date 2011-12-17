@@ -37,8 +37,9 @@ _.mixin({
             return;
         if (event in obj._events) {
             var events = obj._events[event].concat();
-            for (var i = 0, ii = events.length; i &lt; ii; i++)
+            for (var i = 0, len = events.length; i < len; ++i) {
                 events[i].apply(obj, args === undefined ? [] : args);
+            }
         }
         return this;
     },

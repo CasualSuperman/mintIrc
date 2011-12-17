@@ -19,7 +19,7 @@
         if (args >= 3) {
             if (contents instanceof HTMLElement) {
                 elem.appendChild(contents);
-            } else {
+            } else if (contents !== undefined) {
                 elem.appendChild(document.createTextNode(contents));
             }
         }

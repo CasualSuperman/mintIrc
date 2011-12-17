@@ -1,5 +1,6 @@
 _.mixin({
     on: function(obj, event, callback) {
+        "use strict";
         // Define a global Observer
         if(this.isString(obj)) {
             callback = event;
@@ -16,6 +17,7 @@ _.mixin({
         return this;
     },
     once: function(obj, event, callback) {
+        "use strict";
         if(this.isString(obj)) {
             callback = event;
             event = obj;
@@ -28,6 +30,7 @@ _.mixin({
         this.on(obj, event, callback);
     },
     emit: function(obj, event, args){
+        "use strict";
         if(this.isString(obj)) {
             callback = event;
             event = obj;
@@ -44,6 +47,7 @@ _.mixin({
         return this;
     },
     removeEvent: function(obj, event) {
+        "use strict";
         if(this.isString(obj)) {
             event = obj;
             obj = this;

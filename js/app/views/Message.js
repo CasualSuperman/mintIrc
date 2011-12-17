@@ -1,13 +1,15 @@
-var Message = (function() {
-    return function(values) {
-        this.time   = values["time"];
-        this.author = values["author"];
-        this.text   = values["text"];
-        this.mono   = values["mono"];
+var MessageView = (function() {
+    return function(msg) {
+        if (arguments.length !== 1) {
+            throw "IllegalArgCount";
+        }
+        this.msg = msg;
+        this.toNode();
     };
 }());
 
-Message.prototype.toNode = function() {
+
+MessageView.prototype.toNode = function() {
     var el = this.el;
     if (el === undefined) {
         var tr = util.template("tr");

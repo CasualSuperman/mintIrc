@@ -1,4 +1,4 @@
-HTMLElement.prototype.prependElement = function(elem) {
+HTMLElement.prototype.prependChild = function(elem) {
     if (this.firstChild) {
         this.insertBefore(elem, this.firstChild);
     } else {

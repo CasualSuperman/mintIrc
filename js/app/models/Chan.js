@@ -19,5 +19,12 @@ Chan.prototype.addMessages = function(msgs) {
             this.messages.push(new Message(msgs[i]));
         }
     }
-    _(this).fire("add", [msgs]);
+    _(this).emit("add-msgs", [[], msgs]);
 };
+
+Chan.prototype.preMessages = function(msgs) {
+    for (var i = msgs.length - 1; i >= 0; --i) {
+        this.messages.unshift(msgs[i]);
+    }
+    _(this).emit("add-msgs", [msgs, []]);
+}

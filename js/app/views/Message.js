@@ -6,7 +6,6 @@ var MessageView = function(msg) {
     this.el = this._toNode();
 };
 
-
 MessageView.prototype._toNode = function() {
     var el = this.el;
     if (el !== undefined) {

@@ -1,20 +1,25 @@
-var Message = Backbone.Model.extend({
-    sender: null,
-    text: null,
-    mono: false,
+var Message = (function() {
+    return function(values) {
+        this.time   = values["time"];
+        this.author = values["author"];
+        this.text   = values["text"];
+        this.mono   = values["mono"];
+    };
+}());
 
-    initialize: function(defaults){
-        if (!defaults) {
-            throw "IllegalConstructArgs";
-        }
-        var required = ["text"];
-        _.each(required, function(attr) {
-            if (!defaults[attr]) {
-                throw "IllegalConstructArgs";
-            }
-        }, this);
-        _.each(defaults, function(val, attr) {
-           this[attr] = val;
-        }, this);
+Message.prototype.toNode = function() {
+    var el = this.el;
+    if (el === undefined) {
+        var tr = util.template("tr");
+        el = (this.mono) ?                 tr("message status mono") :
+             (this.author === undefined) ? tr("message status") :
+                                           tr("message");
+        var ts = util.template("td");
+        var time   = td("time",    this.time);
+        var author = td("sender",  this.author);
+        var text   = td("message", this.text);
+
+        this.el = el;
     }
-});
+    return el;
+};

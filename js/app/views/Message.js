@@ -4,22 +4,24 @@ var MessageView = (function() {
             throw "IllegalArgCount";
         }
         this.msg = msg;
-        this.toNode();
+        this.el = this._toNode();
     };
 }());
 
 
-MessageView.prototype.toNode = function() {
+MessageView.prototype._toNode = function() {
     var el = this.el;
-    if (el === undefined) {
+    if (el !== undefined) {
+        util.clear(el);
+    } else {
         var tr = util.template("tr");
-        el = (this.mono) ?                 tr("message status mono") :
-             (this.author === undefined) ? tr("message status") :
-                                           tr("message");
-        var ts = util.template("td");
-        var time   = td("time",    this.time);
-        var author = td("sender",  this.author);
-        var text   = td("message", this.text);
+        el = (this.msg.mono) ?                 tr("message status mono") :
+             (this.msg.author === undefined) ? tr("message status") :
+                                               tr("message");
+        var td = util.template("td");
+        var time   = td("time",    this.msg.time);
+        var author = td("sender",  this.msg.author);
+        var text   = td("message", this.msg.text);
 
         this.el = el;
     }

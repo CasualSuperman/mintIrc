@@ -1,88 +1,114 @@
 (function() {
     "use strict";
-    var old  = window['util'],
-        util = {};
+    var _ = window._;
 
-    util.create = function(name, classes, contents) {
+    if (! String.prototype.trim) {
+        var trimReg = /^\s+|\s+$/g;
+        String.prototype.trim = function() {
+            return this.replace(trimReg, "");
+        };
+    }
+
+    function createNode(name, classes, contents) {
         var elem;
         var args = arguments.length;
-        if (args >= 1) {
+        if (_(name).isString()) {
             elem = document.createElement(name);
         }
-        if (args >= 2) {
-            if (classes.constructor.name === "Array") {
-                elem.className = classes.join(" ");
-            } else {
-                elem.className = classes;
-            }
+        var _classes = _(classes);
+        if (_classes.isArray()) {
+            elem.className = classes.join(" ");
+        } else if (_classes.isString()) {
+            elem.className = classes;
         }
-        if (args >= 3) {
-            append.call(elem, contents);
+        if (!_(contents).isUndefined()) {
+            appendThings(elem, contents);
         }
         return elem;
-    };
+    }
 
-    util.append = function(items) { // Call with the context of a node.
-        if (items instanceof HTMLElement) {
-            this.appendChild(items);
-        } else if (items instanceof Array || items instanceof NodeList) {
-            each(items, append, this);
-        } else if (typeof items === "string") {
-            this.appendChild(document.createTextNode(items));
-        } else if (items) {
-            this.appendChild(items);
+    function appendThings(node, items) {
+        var _items = _(items);
+        if (_items.isElement()) {
+            node.appendChild(items);
+        } else if (_items.isArray() || items instanceof NodeList) {
+            _items.each(function(item) {
+                appendThings(node, item);
+            });
+        } else if (_items.isString()) {
+            node.appendChild(document.createTextNode(items));
+        } else {
+            node.appendChild(items);
         }
-        return this; // Chainable?
-    };
+    }
 
-    util.template = function(name, classes) {
-        if (arguments.length === 2) {
-            return function(contents) {
-                return util.create(name, classes, contents);
-            };
-        } else if (arguments.length === 1) {
-            return function(classes, contents) {
-                if (arguments.length === 2) {
-                    return util.create(name, classes, contents);
-                } else if (arguments.length === 1) {
-                    return util.create(name, classes);
-                }
-            };
+    function templateNode(name, classes, content) {
+        switch(arguments.length) {
+            case 0:
+                return function(na, cl, co) {
+                    return createNode(na, cl, co);
+                };
+            case 1:
+                return function(cl, co) {
+                    return createNode(name, cl, co);
+                };
+            case 2:
+                return function(co) {
+                    return createNode(name, classes, co);
+                };
+            case 3:
+                return function() {
+                    return createNode(name, classes, content);
+                };
+            default:
+                throw "IllegalArgCount";
         }
-    };
+    }
 
-    util.hide = function(node) {
+    function hide(node) {
         var old = (node.style) ? node.style.display : "";
         var unhide = function() {
             node.style.display = old;
         };
         node.style.display = "none";
         return unhide;
-    };
+    }
 
-    util.clear = function(node) {
+    function clear(node) {
         var done = hide(node);
-        while(node.hasChildNodes) {
+        while(node.hasChildNodes()) {
             node.removeChild(node.lastChild);
         }
         done();
-        return this;
-    };
+    }
 
-    util.each = function(list, func, context) {
-        var args = arguments.length;
-        if (args > 3 || args < 2) {
-            throw "IllegalArgumentException";
+    function addClass(node, className) {
+        if (!node.className.match(new RegExp("\\b" + className + "\\b"))) {
+            node.className = ((node.className || "") + " " + className).trim();
         }
-        for (var i = 0, len = list.length; i < len; ++i) {
-            var binder = context || list[i];
-            func.call(binder, list[i]);
-        }
-    };
+    }
 
-    util.noConflict = function() {
-        window['util'] = old;
-        return util;
+    function toggleClass(node, className) {
+        var reg = new RegExp("\\b" + className + "\\b");
+        if (reg.test(node.className)) {
+            node.className = node.className.replace(reg, "").trim();
+        } else {
+            node.className = (node.className + " " + className).trim();
+        }
+    }
+
+    function removeClass(node, className) {
+        node.className = node.className.replace(new RegExp("\\b" + className + "\\b"), "").trim();
+    }
+
+    _.dom = {
+        createNode:   createNode,
+        templateNode: templateNode,
+        addClass:     addClass,
+        removeClass:  removeClass,
+        toggleClass:  toggleClass,
+        clear:        clear,
+        hide:         hide,
+        appendThings: appendThings
     };
-    window['util'] = util;
 }());

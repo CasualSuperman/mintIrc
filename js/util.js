@@ -17,13 +17,22 @@
             }
         }
         if (args >= 3) {
-            if (contents instanceof HTMLElement) {
-                elem.appendChild(contents);
-            } else if (contents !== undefined) {
-                elem.appendChild(document.createTextNode(contents));
-            }
+            append.call(elem, contents);
         }
         return elem;
+    }
+
+    function append(items) { // Call with the context of a node.
+        if (items instanceof HTMLElement) {
+            this.appendChild(items);
+        } else if (items instanceof Array || items instanceof NodeList) {
+            each(items, append, this);
+        } else if (typeof items === "string") {
+            this.appendChild(document.createTextNode(items));
+        } else if (items) {
+            this.appendChild(items);
+        }
+        return this; // Chainable?
     }
 
     function template(name, classes) {
@@ -62,6 +71,7 @@
             node.removeChild(node.lastChild);
         }
         done();
+        return this;
     }
 
     function each(list, func, context) {
@@ -80,6 +90,7 @@
     util.each = each;
     util.clear = clear;
     util.hide = hide;
+    util.append = append;
     util.noConflict = function() {
         window['util'] = old;
         return util;

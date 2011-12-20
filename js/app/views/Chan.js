@@ -1,13 +1,14 @@
 var ChanView = function(chan) {
+    var dom = _.dom;
     var elements = {
         // The Menu item.
-        li: util.create("li", ["chan"], chan.name),
+        li: dom.create("li", ["chan"], chan.name),
         // The "body" view.
-        messages: util.create("div", ["chat"], [
-                    util.create("div", ["log_container"], 
-                        util.create("table", ["log"], util.create("tbody"))
+        messages: dom.create("div", ["chat"], [
+                    dom.create("div", ["log_container"], 
+                        dom.create("table", ["log"], dom.create("tbody"))
                     ),
-                    util.create("input")])
+                    dom.create("input")])
     };
     // Get a reference to our table for ease of use.
     var log = elements.messages.getElementsByTagName("tbody")[0];
@@ -31,17 +32,15 @@ var ChanView = function(chan) {
     _(this).on("mentioned", (function(context) {
         return function() {
             if (!context.mentioned && !context.active) {
-                elements.li.className +=  " mentioned";
+                dom.addClass(el.li, "mentioned");
                 context.mentioned = true;
             }
         };
     }(this)));
 
     _(this).on("deactivate", (function(context) {
-        var active = "active";
-        var reg = new RegExp("\\s+" + active + "|" + active + "\\s+|" + active);
         return function() {
-            elements.li.className = elements.li.className.replace(reg, "");
+            dom.removeClass(el.li, "active");
             context.active = false;
         };
     }(this)));
@@ -53,17 +52,17 @@ var ChanView = function(chan) {
     }(this));
 
     _(this).on("activate", (function(context) {
-        var mention = "mentioned";
-        var reg = new RegExp("\\s+" + mention + "|" + mention + "\\s+|" + mention);
         return function() {
-            elements.li.className +=  " active";
+            dom.addClass(el.li, "active");
             context.active = true;
-            elements.li.className = elements.li.className.replace(reg, "");
+            dom.removeClass(el.li, "mentioned");
             context.mentioned = false;
+            _(context).emit("unmentioned");
         };
     }(this)));
 
     this.el = elements;
     this.active = false;
+    this.mentioned = false;
     return this;
 }

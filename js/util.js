@@ -3,7 +3,7 @@
     var old  = window['util'],
         util = {};
 
-    function create(name, classes, contents) {
+    util.create = function(name, classes, contents) {
         var elem;
         var args = arguments.length;
         if (args >= 1) {
@@ -20,9 +20,9 @@
             append.call(elem, contents);
         }
         return elem;
-    }
+    };
 
-    function append(items) { // Call with the context of a node.
+    util.append = function(items) { // Call with the context of a node.
         if (items instanceof HTMLElement) {
             this.appendChild(items);
         } else if (items instanceof Array || items instanceof NodeList) {
@@ -33,9 +33,9 @@
             this.appendChild(items);
         }
         return this; // Chainable?
-    }
+    };
 
-    function template(name, classes) {
+    util.template = function(name, classes) {
         if (arguments.length === 2) {
             return function(contents) {
                 return util.create(name, classes, contents);
@@ -49,32 +49,27 @@
                 }
             };
         }
-    }
+    };
 
-    function hide(node) {
-        var unhide = function() {node.style.display = ""};
-        if (node.style !== undefined) {
-            var old = node.style.display;
-            unhide = function() {
-                node.style.display = old;
-            }
-        } else {
-            node.style = "";
-        }
+    util.hide = function(node) {
+        var old = (node.style) ? node.style.display : "";
+        var unhide = function() {
+            node.style.display = old;
+        };
         node.style.display = "none";
         return unhide;
-    }
+    };
 
-    function clear(node) {
+    util.clear = function(node) {
         var done = hide(node);
         while(node.hasChildNodes) {
             node.removeChild(node.lastChild);
         }
         done();
         return this;
-    }
+    };
 
-    function each(list, func, context) {
+    util.each = function(list, func, context) {
         var args = arguments.length;
         if (args > 3 || args < 2) {
             throw "IllegalArgumentException";
@@ -83,17 +78,11 @@
             var binder = context || list[i];
             func.call(binder, list[i]);
         }
-    }
+    };
 
-    util.create = create;
-    util.template = template;
-    util.each = each;
-    util.clear = clear;
-    util.hide = hide;
-    util.append = append;
     util.noConflict = function() {
         window['util'] = old;
         return util;
-    }
+    };
     window['util'] = util;
 }());

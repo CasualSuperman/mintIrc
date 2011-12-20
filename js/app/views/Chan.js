@@ -17,7 +17,7 @@ var ChanView = function(chan) {
         log.appendChild(new MessageView(msg).el);
     });
 
-    _(chan).on("add-msgs", (function(context) {
+    _(chan).on("add-messages", (function(context) {
         return function(premsgs, postmsgs) {
             _(premsgs).each(function(msg) {
                 log.prependChild(new MessageView(msg).el);
@@ -28,9 +28,20 @@ var ChanView = function(chan) {
         };
     }(this)));
 
-    _(this).on("deactivate", (function(context) {
+    _(this).on("mentioned", (function(context) {
         return function() {
-            elements.li.className = elements.li.className.replace(/\s+active|active\s+|active/, "");
+            if (!context.mentioned && !context.active) {
+                elements.li.className +=  " mentioned";
+                context.mentioned = true;
+            }
+        };
+    }(this)));
+
+    _(this).on("deactivate", (function(context) {
+        var active = "active";
+        var reg = new RegExp("\\s+" + active + "|" + active + "\\s+|" + active);
+        return function() {
+            elements.li.className = elements.li.className.replace(reg, "");
             context.active = false;
         };
     }(this)));
@@ -42,9 +53,13 @@ var ChanView = function(chan) {
     }(this));
 
     _(this).on("activate", (function(context) {
+        var mention = "mentioned";
+        var reg = new RegExp("\\s+" + mention + "|" + mention + "\\s+|" + mention);
         return function() {
             elements.li.className +=  " active";
             context.active = true;
+            elements.li.className = elements.li.className.replace(reg, "");
+            context.mentioned = false;
         };
     }(this)));
 

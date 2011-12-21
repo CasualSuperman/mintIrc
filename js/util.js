@@ -102,13 +102,13 @@
     }
 
     _.dom = {
-        createNode:   createNode,
-        templateNode: templateNode,
+        create:   createNode,
+        template: templateNode,
         addClass:     addClass,
         removeClass:  removeClass,
         toggleClass:  toggleClass,
         clear:        clear,
         hide:         hide,
-        appendThings: appendThings
+        append: appendThings
     };
 }());

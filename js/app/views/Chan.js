@@ -61,8 +61,9 @@ var ChanView = function(chan) {
         };
     }(this)));
 
-    this.el = elements;
-    this.active = false;
-    this.mentioned = false;
-    return this;
+    return {
+        el: elements,
+        active: false,
+        mentioned: false
+    };
 }

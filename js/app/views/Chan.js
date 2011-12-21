@@ -53,17 +53,15 @@ var ChanView = function(chan) {
 
     _(this).on("activate", (function(context) {
         return function() {
-            dom.addClass(el.li, "active");
+            dom.addClass(elements.li, "active");
             context.active = true;
-            dom.removeClass(el.li, "mentioned");
+            dom.removeClass(elements.li, "mentioned");
             context.mentioned = false;
             _(context).emit("unmentioned");
         };
     }(this)));
 
-    return {
-        el: elements,
-        active: false,
-        mentioned: false
-    };
+    this.el = elements;
+    this.active = false;
+    this.mentioned = false;
 }

@@ -36,8 +36,8 @@ var ServerView = function(serv) {
             elements.chans.insertBefore(view.el.li, elements.chans.childNodes[index].nextSibling);
         } else {
             chanViews.push(view);
-            view.active = true;
-            dom.append(elements.chans, view.li);
+            _(view).emit("activate");
+            dom.append(elements.chans, view.el.li);
             _(this).emit("new-active", [view]);
         }
     });

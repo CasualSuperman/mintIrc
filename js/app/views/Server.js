@@ -18,16 +18,6 @@ var ServerView = function(serv) {
     
     // Handle new channels.
     _(serv).on("new-chan", function(chan) {
-        // Object
-        console.log(chan);
-        // 0
-        console.log(chanViews.length);
-        // [ object ]
-        console.log(chanViews);
-        global = chanViews; // This was so I could look at it after the fact.
-        // 0
-        console.log(chanViews.length);
-        // This is the object that is already contained in chanViews above.
         var view = new ChanView(chan);
         if (chanViews.length > 0) { 
             // Takes this path even though it was logged at 0 above

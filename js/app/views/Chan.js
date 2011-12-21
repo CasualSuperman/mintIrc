@@ -40,7 +40,7 @@ var ChanView = function(chan) {
 
     _(this).on("deactivate", (function(context) {
         return function() {
-            dom.removeClass(el.li, "active");
+            dom.removeClass(elements.li, "active");
             context.active = false;
         };
     }(this)));

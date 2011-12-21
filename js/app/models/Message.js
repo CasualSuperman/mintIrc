@@ -1,12 +1,12 @@
 var Message = (function() {
     var reg = /:([^ ]+) ([^ ]+) ?(.+)?$/,
-    //         :server   action    extra
+    //         :server   action  extra
         actions = {
             "PRIVMSG": (function() {
                 var info = /^(.*) :(.*)$/,
-                    user = /^([^!]+)!([^@]+)@(.+)$/;
+                    user = /^([^!]+)(?:!([^@]+))?@(.+)$/;
                 return function(match) {
-                    var extra = match[3].match(reg);
+                    var extra = match[3].match(info);
                     if (extra !== null) {
                         var from = match[1].match(user);
                         if (!from) {
@@ -24,19 +24,17 @@ var Message = (function() {
             }())
         };
     return function(str) {
-        var match = str.match(reg),
-            ret   = {};
+        var match = str.match(reg);
         if (match !== null) {
-            ret.time = new Date();
-            ret.serv = match[1];
-            ret.action = match[2];
+            this.time = new Date();
+            this.serv = match[1];
+            this.action = match[2];
             var extra = match[3];
-            if (!actions[ret.action]) {
+            if (!actions[this.action]) {
                 console.log("Unknown action", ret.action, str);
             } else {
-                actions[ret.action].call(ret, match);
+                actions[this.action].call(this, match);
             }
         }
-        return ret;
     };
 }());

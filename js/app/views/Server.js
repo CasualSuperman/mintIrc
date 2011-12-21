@@ -26,6 +26,10 @@ var ServerView = function(serv) {
     });
     }(this));
 
+    if (chanViews.length > 0) {
+        _(chanViews[0]).emit("activate");
+    }
+
     // Flash on mention.
     _(this).on("mentioned", (function(context) {
         return function() {

@@ -51,15 +51,15 @@ var ChanView = function(chan) {
         };
     }(this));
 
-    _(this).on("activate", (function(context) {
-        return function() {
-            dom.addClass(elements.li, "active");
-            context.active = true;
-            dom.removeClass(elements.li, "mentioned");
-            context.mentioned = false;
-            _(context).emit("unmentioned");
-        };
-    }(this)));
+    _(this).on("activate", _.bind(function() {
+        dom.addClass(elements.li, "active");
+        this.active = true;
+        dom.removeClass(elements.li, "mentioned");
+        if (this.mentioned) {
+            this.mentioned = false;
+            _(this).emit("unmentioned");
+        }
+    }, this));
 
     this.el = elements;
     this.active = false;

@@ -18,13 +18,16 @@ Server.prototype.addMessage = function(msg) {
 Server.prototype.addMessages = function(msgs) {
     _(msgs).each(function(msg) {
         if (msg instanceof Message) {
+            console.log("Looking for chan", msg.chan);
             var chan = _(this.chans).find(function(chan) {
                 return chan.name === msg.chan;
             });
             chan.addMessage(msg);
-            if (this._nick.text(msg.text)) {
+            if (this._nick.test(msg.text)) {
                 _(chan).emit("mentioned");
             }
+        } else {
+            return "Not a message.";
         }
     }, this);
 };

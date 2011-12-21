@@ -38,7 +38,7 @@
         } else if (_items.isString()) {
             node.appendChild(document.createTextNode(items));
         } else {
-            node.appendChild(items);
+            node.appendChild(document.createTextNode(items.toString()));
         }
     }
 

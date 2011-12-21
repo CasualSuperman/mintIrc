@@ -7,11 +7,12 @@ var MessageView = function(msg) {
 };
 
 MessageView.prototype._toNode = function() {
-    var el = this.el;
+    var el  = this.el,
+        dom = _.dom;
     if (el !== undefined) {
-        util.clear(el);
+        dom.clear(el);
     } else {
-        var tr = util.template("tr");
+        var tr = dom.template("tr");
         var classes = ["message"];
         if (this.msg.mono) {
             classes.push("mono");
@@ -20,13 +21,13 @@ MessageView.prototype._toNode = function() {
             classes.push("status");
         }
         el = tr(classes);
-        var td = util.template("td");
+        var td = dom.template("td");
         var time   = td("time",    this.msg.time);
         var author = td("sender",  this.msg.author);
         var text   = td("message", this.msg.text);
 
-        util.each([time, author, text], function(elem) {
-            el.appendChild(elem);
+        _.each([time, author, text], function(elem) {
+            dom.append(el, elem);
         });
         this.el = el;
     }

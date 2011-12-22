@@ -61,11 +61,14 @@ var ServerView = function(serv) {
     _(serv).on("new-chan", function(chan) {
         var view = new ChanView(chan);
         if (chanViews.length > 0) { 
-            // Takes this path even though it was logged at 0 above
-            var index = _(chanViews).chain().pluck('active').indexOf(true).value();
+            // Open just after the active channel.
+            var index = _.indexBy(chanViews, function(view) {
+                return view.active;
+            });
             chanViews.splice(index + 1, 0, view);
             elements.chans.insertBefore(view.el.li, elements.chans.childNodes[index].nextSibling);
         } else {
+            // Only channel.
             chanViews.push(view);
             _(view).emit("activate");
             dom.append(elements.chans, view.el.li);

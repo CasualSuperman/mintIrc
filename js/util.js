@@ -29,7 +29,7 @@
 
     function appendThings(node, items) {
         var _items = _(items);
-        if (_items.isElement()) {
+        if (_items.isElement() || items.nodeType === 3) {
             node.appendChild(items);
         } else if (_items.isArray() || items instanceof NodeList) {
             _items.each(function(item) {
@@ -111,4 +111,12 @@
         hide:         hide,
         append: appendThings
     };
+    _.mixin({
+        indexBy: function(list, func) {
+            for(var i = 0, len = list.length; i < len; ++i) {
+                if(func(list[i])) return i;
+            }
+            return -1;
+        }
+    });
 }());

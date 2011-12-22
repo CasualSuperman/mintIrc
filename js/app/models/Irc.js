@@ -41,6 +41,9 @@ var Irc = (function() {
 
 Irc.prototype.handle = function() {
     var _conn = _(this.conn);
+    _conn.on("open", function(e) {
+        console.log("Connection open!");
+    });
     _conn.on("close", function(e) {
         console.log("Connection closed.");
     });

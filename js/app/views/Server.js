@@ -5,57 +5,24 @@ var ServerView = function(serv) {
         li: dom.create("li", ["serv"], serv.name),
         // Chan list
         chans: dom.create("ul", ["chans"]),
-        main: new ChanView(serv.main).el
     };
+    this.main = new MainChanView(serv.main);
+
     // Get our list of chanviews.
-    var chanViews = _(serv.chans).map(function(chan) {
+    var chanViews = _.map(serv.chans, function(chan) {
         return new ChanView(chan);
     });
 
     // Add the chans to our menu.
-    (function(context) {
-    _(chanViews).each(function(chan) {
-        var _chan = _(chan);
-        _chan.on("activate", function() {
-            _(context).emit("new-active");
-        });
-        _chan.on("mentioned", function() {
-            _(context).emit("mentioned")
-        });
+    _.each(chanViews, function(chan) {
         elements.chans.appendChild(chan.el.li);
     });
-    }(this));
 
     if (chanViews.length > 0) {
-        _(chanViews[0]).emit("activate");
-    }
-
-    // Flash on mention.
-    _(this).on("mentioned", (function(context) {
-        return function() {
-            if (!context.mentioned && !context.active) {
-                dom.addClass(el.li, "mentioned");
-                context.mentioned = true;
-            }
-        };
-    }(this)));
-
-    _(this).on("deactivate", (function(context) {
-        return function() {
-            dom.removeClass(elements.li, "active");
-            context.active = false;
+        if (this.active) {
+            _.emit("new-active-chan", chanViews[0]);
         }
-    }(this)));
-
-    _(this).on("activate", (function(context) {
-        return function() {
-            dom.addClass(elements.li, "active");
-            context.active = true;
-            dom.removeClass(elements.li, "mentioned");
-            context.mentioned = false;
-            _(context).emit("unmentioned");
-        };
-    }(this)));
+    }
 
     // Handle new channels.
     _(serv).on("new-chan", function(chan) {
@@ -70,18 +37,39 @@ var ServerView = function(serv) {
         } else {
             // Only channel.
             chanViews.push(view);
-            _(view).emit("activate");
             dom.append(elements.chans, view.el.li);
-            _(this).emit("new-active", [view]);
         }
     });
     this.el = elements;
     this._chanViews = chanViews;
 }
 
-ServerView.prototype.getActiveMessageElement = function() {
+ServerView.prototype.getActiveChanView = function() {
     var active = _(this._chanViews).find(function(chan) {
         return chan.active;
     });
-    return active ? active.el.messages : this.el.main.messages;
+    return active ? active : this.main;
+}
+ServerView.prototype.activate = function() {
+    _.dom.addClass(this.el.li, "is-active");
+    this.active = true;
+    this.unmentioned();
+};
+
+ServerView.prototype.deactivate = function() {
+    _.dom.removeClass(this.ls.li, "is-active");
+    this.active = false;
+}
+
+ServerView.prototype.mentioned = function() {
+    dom.addClass(el.li, "is-mentioned");
+    context.mentioned = true;
+}
+
+ServerView.prototype.unmentioned = function() {
+    if (this.mentioned) {
+        _(this).emit("unmentioned");
+        this.mentioned = false;
+        _.dom.removeClass(this.el.li, "is-mentioned");
+    }
 }

@@ -1,29 +1,42 @@
 var IrcView = (function() {
-    return function(irc) {
-        var dom = _.dom,
-            append = _.dom.append;
+    var dom = _.dom,
+        append = _.dom.append;
+    function setup() {
         var elements = {
-            body: document.body,
-            modChan: dom.create("div", ["modal", "newChan"]),
-            modServ: dom.create("div", ["modal", "newServ"]),
-            servList: dom.create("ul", ["servs"]),
-            newServ: dom.create("span", ["serv", "nonitem"], "+"),
-            newChan: dom.create("span", ["chan", "nonitem"], "+"),
-            header: dom.create("header", ["connection-list"])
+                body: document.body,
+                modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
+                modServ: new ModalServWindow(), //dom.create("div", ["modal", "newServ"]),
+                servList: dom.create("ul", ["servs"]),
+                newServ: dom.create("span", ["serv", "nonitem"], "+"),
+                newChan: dom.create("span", ["chan", "nonitem"], "+"),
+                header: dom.create("header", ["connection-list"])
         };
-        dom.clear(elements.body);
-        this._defaultServ = new DefaultView();
-        
-        var serverViews = this._serverViews = _.map(irc.servers, function(serv) {
+        this.el = elements;
+
+        this._defaultServ = new DefaultServerView();
+        var serverViews = _.map(irc.servers, function(serv) {
             return new ServerView(serv);
         });
-
-        _.each(serverViews, function(servView) {
-            append(servList, servView.el.li);
-        });
         if (serverViews.length > 0) {
-            serverViews[0] = active;
+            serverViews[0].activate();
         }
+        _.each(serverViews, function(servView) {
+            append(elements.servList, servView.el.li);
+        });
+        this._serverViews = serverViews;
+
+        elements.newServ.onclick = function() {
+            append(elements.body, elements.modServ.el);
+        };
+        elements.newChan.onclick = function() {
+            append(elements.body, elements.modChan.el);
+        };
+    }
+    return function(irc) {
+        setup.call(this);
+        var elements = this.el;
+
+        /* Dom setup. */
         var activeServer = this.getActiveServerView();
         elements.chanList = activeServer.el.chans;
 
@@ -35,6 +48,34 @@ var IrcView = (function() {
         ]);
         append(elements.body, elements.header);
         append(elements.body, activeServer.getActiveMessageElement());
+
+        /* Global event handling. */
+        _.on("new-active-chan", _.bind(function(chanView) {
+            var oldView = this.getActiveServerView().getActiveChanView();
+            oldView.deactivate();
+            newView.activate();
+            elements.body.replaceChild(old.el.messages, view.el.messages);
+        }, this));
+
+        _.on("new-active-serv", _.bind(function(servView) {
+            var oldView = this.getActiveServerView();
+            oldView.deactivate();
+            newView.activate();
+        }, this));
+
+        /* Local event handling. */
+        _(irc).on("new-server", _.bind(function(server) {
+            var view = new ServerView(server);
+            if (serverViews.length > 0) {
+                var index = _.indexBy(serverViews, function(serv) {
+                    return serv.active === true;
+                });
+            } else {
+                serverViews.push(view);
+                append(elements.servList, view.el.li);
+                _.emit("new-active-serv", [view]);
+            }
+        }, this));
     };
 }());
 

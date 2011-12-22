@@ -18,7 +18,7 @@ var ChanView = function(chan) {
         log.appendChild(new MessageView(msg).el);
     });
 
-    _(chan).on("add-messages", (function(context) {
+    _(chan).on("new-msgs", (function(context) {
         return function(premsgs, postmsgs) {
             _(premsgs).each(function(msg) {
                 log.prependChild(new MessageView(msg).el);

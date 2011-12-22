@@ -8,23 +8,27 @@ var MessageView = function(msg) {
 
 MessageView.prototype._toNode = function() {
     var el  = this.el,
-        dom = _.dom;
+        dom = _.dom,
+        msg = this.msg;
     if (el !== undefined) {
         dom.clear(el);
     } else {
         var tr = dom.template("tr");
         var classes = ["message"];
-        if (this.msg.mono) {
+        if (msg.mono) {
             classes.push("mono");
         }
-        if (this.msg.author === undefined) {
+        if (msg.mentioned) {
+            classes.push("mention");
+        }
+        if (msg.user === undefined) {
             classes.push("status");
         }
         el = tr(classes);
         var td = dom.template("td");
-        var time   = td("time",    this.msg.time);
-        var author = td("sender",  this.msg.author);
-        var text   = td("message", this.msg.text);
+        var time   = td("time",    msg.time);
+        var author = td("sender",  msg.user.nick);
+        var text   = td("message", msg.text);
 
         _.each([time, author, text], function(elem) {
             dom.append(el, elem);

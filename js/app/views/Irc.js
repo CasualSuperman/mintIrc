@@ -1,7 +1,7 @@
 var IrcView = (function() {
     var dom = _.dom,
         append = _.dom.append;
-    function setup(obj) {
+    function setup(obj, base) {
         var elements = {
                 body: document.body,
                 modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
@@ -16,7 +16,7 @@ var IrcView = (function() {
 
         // View for 0 servers.
         obj._defaultServ = new DefaultServerView();
-        var serverViews = _.map(irc.servers, function(serv) {
+        var serverViews = _.map(base.servers, function(serv) {
             return new ServerView(serv);
         });
 
@@ -40,7 +40,7 @@ var IrcView = (function() {
         };
 
         /* Dom Structure. */
-        var activeServer = this.getActiveServerView();
+        var activeServer = obj.getActiveServerView();
         elements.chanList = activeServer.el.chans;
 
         append(elements.header, [
@@ -55,7 +55,7 @@ var IrcView = (function() {
 
     }
     return function(irc) {
-        setup(this);
+        setup(this, irc);
 
         /* Global event handling. */
         _.on("new-active-chan", _.bind(function(chanView) {

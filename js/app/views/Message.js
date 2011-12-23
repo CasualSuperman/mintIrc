@@ -1,39 +1,19 @@
-var MessageView = function(msg) {
-    if (arguments.length !== 1) {
-        throw "IllegalArgCount";
-    }
-    this.msg = msg;
-    this.el = this._toNode();
-};
-
-MessageView.prototype._toNode = function() {
-    var el  = this.el,
-        dom = _.dom,
-        msg = this.msg;
-    if (el !== undefined) {
-        dom.clear(el);
-    } else {
-        var tr = dom.template("tr");
+var MessageView = (function() {
+    function toNode(msg) {
         var classes = ["message"];
-        if (msg.mono) {
-            classes.push("mono");
-        }
-        if (msg.mentioned) {
-            classes.push("mention");
-        }
-        if (msg.user === undefined) {
-            classes.push("status");
-        }
-        el = tr(classes);
-        var td = dom.template("td");
-        var time   = td("time",    msg.time);
-        var author = td("sender",  msg.user.nick);
-        var text   = td("message", msg.text);
-
-        _.each([time, author, text], function(elem) {
-            dom.append(el, elem);
-        });
-        this.el = el;
+        if (msg.mono) classes.push("mono");
+        if (msg.mentioned) classes.push("mentioned");
+        if (!msg.user) classes.push("status");
+        var td = _.dom.template("td");
+        var el = _.dom.create("tr", classes, [
+            td("time", msg.time),
+            td("sender", msg.user.nick),
+            td("message", msg.text)
+        ]);
+        return el;
     }
-    return el;
-};
+    return function(msg) {
+        this._msg = msg;
+        this.el = toNode(msg);
+    };
+}());

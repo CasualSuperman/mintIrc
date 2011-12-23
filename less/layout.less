@@ -27,5 +27,14 @@ body {
 }
 
 input.chat {
-
+	background-color: @grey;
+	border-style: none;
+	bottom: 0;
+	font-size: 1.5em;
+	position: fixed;
+	width: 100%;
+	&:focus {
+		background-color: fadeout(@grey, 10%);
+		outline: none;
+	}
 }

@@ -1,7 +1,7 @@
 var DefaultServerView = (function() {
     return function() {
         this.el = {
-            chans: _.dom.create("li")
+            chans: _.dom.create("ul")
         };
     };
 }());

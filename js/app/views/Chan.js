@@ -31,37 +31,11 @@ var ChanView = (function() {
             };
         }(this)));
 
-        _(this).on("mentioned", (function(context) {
-            return function() {
-                if (!context.mentioned && !context.active) {
-                    dom.addClass(el.li, "mentioned");
-                    context.mentioned = true;
-                }
-            };
-        }(this)));
-
-        _(this).on("deactivate", (function(context) {
-            return function() {
-                dom.removeClass(elements.li, "active");
-                context.active = false;
-            };
-        }(this)));
-
         elements.li.onclick = (function(context) {
             return function() {
                 _(context).emit("activate");
             };
         }(this));
-
-        _(this).on("activate", _.bind(function() {
-            dom.addClass(elements.li, "active");
-            this.active = true;
-            dom.removeClass(elements.li, "mentioned");
-            if (this.mentioned) {
-                this.mentioned = false;
-                _(this).emit("unmentioned");
-            }
-        }, this));
 
         this.el = elements;
         this.active = false;

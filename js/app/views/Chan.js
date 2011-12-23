@@ -7,9 +7,10 @@ var ChanView = (function() {
             // The "body" view.
             messages: dom.create("div", ["chat"], [
                         dom.create("div", ["log_container"], 
-                            dom.create("table", ["log"], dom.create("tbody"))
-                        ),
-                        dom.create("input")])
+                          dom.create("table", ["log"],
+                            dom.create("tbody"))),
+                        dom.create("input")
+                      ])
         };
         // Get a reference to our table for ease of use.
         var log = elements.messages.getElementsByTagName("tbody")[0];

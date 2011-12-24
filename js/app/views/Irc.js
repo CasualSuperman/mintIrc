@@ -7,8 +7,8 @@ var IrcView = (function() {
                 modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
                 modServ: new ModalServWindow(), //dom.create("div", ["modal", "newServ"]),
                 servList: dom.create("ul", ["servs"]),
-                newServ: dom.create("span", ["serv", "nonitem"], "+"),
-                newChan: dom.create("span", ["chan", "nonitem"], "+"),
+                newServ: dom.create("li", ["serv", "nonitem"], "+"),
+                newChan: dom.create("li", ["chan", "nonitem"], "+"),
                 header: dom.create("header", ["connection-list"]),
                 input: dom.create("input", ["chat"])
         };
@@ -24,10 +24,12 @@ var IrcView = (function() {
         if (serverViews.length > 0) {
             serverViews[0].activate();
         }
-        // Set up chan menu
+        // Set up server menu
         _.each(serverViews, function(servView) {
             append(elements.servList, servView.el.li);
         });
+        elements.servList.appendChild(elements.newServ);
+        
         // Make globally accessible.
         obj._serverViews = serverViews;
 
@@ -45,48 +47,56 @@ var IrcView = (function() {
 
         append(elements.header, [
             elements.servList,
-            elements.newServ,
-            elements.chanList,
-            elements.newChan
+            elements.chanList
         ]);
         append(elements.body, elements.header);
         append(elements.body, activeServer.getActiveChanView().el.messages);
         append(elements.body, elements.input);
 
+        obj._serverViews = serverViews;
     }
     return function(irc) {
         setup(this, irc);
 
+        var elements = this.el,
+            context = this,
+            serverViews = this._serverViews;
+
         /* Global event handling. */
-        _.on("new-active-chan", _.bind(function(chanView) {
-            var oldView = this.getActiveServerView().getActiveChanView();
+        _.on("new-active-chan", function(newView) {
+            var oldView = context.getActiveServerView().getActiveChanView();
             oldView.deactivate();
             newView.activate();
-            elements.body.replaceChild(old.el.messages, view.el.messages);
-        }, this));
+            elements.body.replaceChild(newView.el.messages, oldView.el.messages);
+        });
 
-        _.on("new-active-serv", _.bind(function(servView) {
-            var oldView = this.getActiveServerView();
+        _.on("new-active-serv", function(newView) {
+            var oldView = context.getActiveServerView();
             oldView.deactivate();
             newView.activate();
             var oldChan = oldView.getActiveChanView();
             var newChan = newView.getActiveChanView();
-            elements.body.replaceChild(oldChan.el.messages, newChan.el.messages);
-        }, this));
+            elements.body.replaceChild(newChan.el.messages, oldChan.el.messages);
+            elements.header.replaceChild(newView.el.chans, oldView.el.chans);
+            append(newView.el.chans, elements.newChan);
+        });
 
         /* Local event handling. */
-        _(irc).on("new-server", _.bind(function(server) {
+        _(irc).on("new-server", function(server) {
             var view = new ServerView(server);
             if (serverViews.length > 0) {
                 var index = _.indexBy(serverViews, function(serv) {
                     return serv.active === true;
                 });
+                serverViews.splice(index + 1, 0, view);
+                elements.servList.insertBefore(view.el.li, elements.servList.childNodes[index + 1]);
             } else {
                 serverViews.push(view);
-                append(elements.servList, view.el.li);
+                elements.servList.prependChild(view.el.li);
                 _.emit("new-active-serv", [view]);
+                view.activate();
             }
-        }, this));
+        });
     };
 }());
 

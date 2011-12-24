@@ -32,7 +32,7 @@ _.mixin({
     emit: function(obj, event, args){
         "use strict";
         if(this.isString(obj)) {
-            callback = event;
+            args = event;
             event = obj;
             obj = this;
         }

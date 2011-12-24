@@ -1,5 +1,5 @@
 var ServerView = (function() {
-    function setup(obj) {
+    function setup(obj, serv) {
         var dom = _.dom;
         var elements = {
             // Menu item
@@ -20,6 +20,10 @@ var ServerView = (function() {
             elements.chans.appendChild(chan.el.li);
         });
 
+        if (chanViews.length > 0) {
+            chanViews[0].activate();
+        }
+
         elements.li.onclick = function() {
             if (obj.active) {
                 // Display our "hidden" channel.
@@ -29,11 +33,12 @@ var ServerView = (function() {
                 _.emit("new-active-serv", [obj]);
             }
         };
-
+        obj.el = elements;
     }
     return function(serv) {
-        setup(this);
-
+        setup(this, serv);
+        var chanViews = this._chanViews,
+            elements  = this.el;
         // Handle new channels.
         _(serv).on("new-chan", function(chan) {
             var view = new ChanView(chan);
@@ -47,7 +52,8 @@ var ServerView = (function() {
             } else {
                 // Only channel.
                 chanViews.push(view);
-                dom.append(elements.chans, view.el.li);
+                elements.chans.prependChild(view.el.li);
+                _.emit("new-active-chan", [view]);
             }
         });
     }

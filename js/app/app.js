@@ -5,5 +5,5 @@
  *
  * Date: Thu Apr 07 14:26:07 2011 -0500
  */
-var Main = new Irc();
-new IrcView(Main);
+window.App  = new Irc();
+window.View = new IrcView(window.App);

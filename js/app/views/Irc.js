@@ -11,9 +11,9 @@ var IrcView = (function() {
                 newChan: dom.create("li", ["chan", "nonitem"], "+"),
                 header: dom.create("header", ["connection-list"]),
                 input: dom.create("input", ["chat"]),
-                grad: dom.create("div");
+                gradient: dom.create("div")
         };
-        elements.grad.id = "gradient";
+        elements.gradient.id = "gradient";
         obj.el = elements;
 
         // View for 0 servers.

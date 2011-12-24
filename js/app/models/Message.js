@@ -21,6 +21,17 @@ var Message = (function() {
                         console.log("Unable to parse as PRIVMSG", match.input);
                     }
                 };
+            }()),
+            "JOIN": (function() {
+                var user = /^([^!]+)(?:!([^@]+))?@(.+)$/,
+                    chan = /^:(.+)$/;
+                return function(match) {
+                    var from = match[1].match(user);
+                    //this.user = new User(from[1], from[2], from[3]);
+                    this.chan = match[3].match(chan)[1];
+                    this.serv = from[3];
+                    this.text = "User " + from[1] + " has joined.";
+                }
             }())
         };
     return function(str) {
@@ -31,7 +42,7 @@ var Message = (function() {
             this.action = match[2];
             var extra = match[3];
             if (!actions[this.action]) {
-                console.log("Unknown action", ret.action, str);
+                console.log("Unknown action", match, str);
             } else {
                 actions[this.action].call(this, match);
             }

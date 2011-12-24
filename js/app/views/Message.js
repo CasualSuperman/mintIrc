@@ -3,13 +3,20 @@ var MessageView = (function() {
         var classes = ["message"];
         if (msg.mono) classes.push("mono");
         if (msg.mentioned) classes.push("mentioned");
-        if (!msg.user) classes.push("status");
-        var td = _.dom.template("td");
-        var el = _.dom.create("tr", classes, [
-            td("time", msg.time),
-            td("sender", msg.user.nick),
-            td("message", msg.text)
-        ]);
+        var td = _.dom.template("td"),
+            el;
+        if (msg.user) {
+            el = _.dom.create("tr", classes, [
+                td("time", msg.time),
+                td("sender", (msg.user) ? msg.user.nick : ""),
+                td("message", msg.text)
+            ]);
+        } else {
+            classes.push("status");
+            var msg = td("message", msg.text);
+            msg.colspan = 3;
+            el = _.dom.create("tr", classes, msg);
+        }
         return el;
     }
     return function(msg) {

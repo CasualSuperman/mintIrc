@@ -5,12 +5,9 @@ var ChanView = (function() {
             // The Menu item.
             li: dom.create("li", ["chan"], chan.name),
             // The "body" view.
-            messages: dom.create("div", ["chat"], [
-                        dom.create("div", ["log_container"], 
+            messages: dom.create("div", ["log_container", "is-selectable"],
                           dom.create("table", ["log"],
-                            dom.create("tbody"))),
-                        dom.create("input")
-                      ])
+                            dom.create("tbody")))
         };
         // Get a reference to our table for ease of use.
         var log = elements.messages.getElementsByTagName("tbody")[0];
@@ -33,7 +30,8 @@ var ChanView = (function() {
 
         elements.li.onclick = (function(context) {
             return function() {
-                _(context).emit("activate");
+                _.emit("new-active-chan", [context]);
+                context.activate();
             };
         }(this));
 

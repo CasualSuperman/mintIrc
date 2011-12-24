@@ -10,8 +10,10 @@ var IrcView = (function() {
                 newServ: dom.create("li", ["serv", "nonitem"], "+"),
                 newChan: dom.create("li", ["chan", "nonitem"], "+"),
                 header: dom.create("header", ["connection-list"]),
-                input: dom.create("input", ["chat"])
+                input: dom.create("input", ["chat"]),
+                grad: dom.create("div");
         };
+        elements.grad.id = "gradient";
         obj.el = elements;
 
         // View for 0 servers.
@@ -47,7 +49,8 @@ var IrcView = (function() {
 
         append(elements.header, [
             elements.servList,
-            elements.chanList
+            elements.chanList,
+            elements.gradient
         ]);
         append(elements.body, elements.header);
         append(elements.body, activeServer.getActiveChanView().el.messages);
@@ -68,6 +71,8 @@ var IrcView = (function() {
             oldView.deactivate();
             newView.activate();
             elements.body.replaceChild(newView.el.messages, oldView.el.messages);
+            newView.el.messages.style.bottom = elements.input.offsetHeight + "px";
+            newView.el.messages.style.top    = elements.header.offsetHeight + "px";
         });
 
         _.on("new-active-serv", function(newView) {
@@ -79,6 +84,8 @@ var IrcView = (function() {
             elements.body.replaceChild(newChan.el.messages, oldChan.el.messages);
             elements.header.replaceChild(newView.el.chans, oldView.el.chans);
             append(newView.el.chans, elements.newChan);
+            newChan.el.messages.style.bottom = elements.input.offsetHeight + "px";
+            newChan.el.messages.style.top    = elements.header.offsetHeight + "px";
         });
 
         /* Local event handling. */

@@ -33,7 +33,7 @@ var Irc = (function() {
         };
         values = values || {};
         this.servers = values.servers || [];
-        this.conn    = values.conn || connect.call(this);
+        this.conn    = values.conn || (window.WebSocket) ? connect.call(this) : {};
         this.handle();
         this.el = elements;
     }

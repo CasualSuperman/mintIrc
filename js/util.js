@@ -31,12 +31,16 @@
         var _items = _(items);
         if (_items.isElement() || items.nodeType === 3) {
             node.appendChild(items);
-        } else if (_items.isArray() || items instanceof NodeList) {
+        } else if (_items.isArray()) {
             _items.each(function(item) {
                 appendThings(node, item);
             });
         } else if (_items.isString()) {
             node.appendChild(document.createTextNode(items));
+        } else if (_items.toArray().length > 0) {
+            _each(_items.toArray(), function(item) {
+                appendThings(node, item);
+            });
         } else {
             node.appendChild(document.createTextNode(items.toString()));
         }
@@ -101,6 +105,27 @@
         node.className = node.className.replace(new RegExp("\\b" + className + "\\b"), "").trim();
     }
 
+    function prepend(node, items) {
+        var _items = _(items);
+        var first = node.firstChild;
+
+        if (_items.isElement() || items.nodeType === 3) {
+            node.insertBefore(items, first);
+        } else if (_items.isArray()) {
+            _items.each(function(item) {
+                prepend(node, item);
+            });
+        } else if (_items.isString()) {
+            node.insertBefore(document.createTextNode(items), first);
+        } else if (_items.toArray().length > 0) {
+            _each(_items.toArray(), function(item) {
+                prepend(node, item);
+            });
+        } else {
+            node.insertBefore(document.createTextNode(items.toString()), first);
+        }
+    }
+
     _.dom = {
         create:   createNode,
         template: templateNode,
@@ -109,7 +134,8 @@
         toggleClass:  toggleClass,
         clear:        clear,
         hide:         hide,
-        append: appendThings
+        append: appendThings,
+        prependChild: prepend
     };
     _.mixin({
         indexBy: function(list, func) {

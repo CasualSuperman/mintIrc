@@ -52,7 +52,7 @@ var ServerView = (function() {
             } else {
                 // Only channel.
                 chanViews.push(view);
-                elements.chans.prependChild(view.el.li);
+                _.dom.prependChild(elements.chans, view.el.li);
                 _.emit("new-active-chan", [view]);
             }
         });

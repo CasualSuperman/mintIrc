@@ -23,7 +23,7 @@ var ChanView = (function() {
         _(chan).on("new-msgs", (function(context) {
             return function(premsgs, postmsgs) {
                 _(premsgs).each(function(msg) {
-                    log.prependChild(new MessageView(msg).el);
+                    _.dom.prependChild(log, new MessageView(msg).el);
                 }, context);
                 _(postmsgs).each(function(msg) {
                     log.appendChild(new MessageView(msg).el);
@@ -46,7 +46,7 @@ var ChanView = (function() {
 ChanView.prototype.activate = function() {
     _.dom.addClass(this.el.li, "is-active");
     this.active = true;
-    this.unmentioned();
+    this.unmention();
 };
 
 ChanView.prototype.deactivate = function() {
@@ -54,12 +54,12 @@ ChanView.prototype.deactivate = function() {
     this.active = false;
 };
 
-ChanView.prototype.mentioned = function() {
+ChanView.prototype.mention = function() {
     _.dom.addClass(this.el.li, "is-interesting");
     this.mentioned = true;
 };
 
-ChanView.prototype.unmentioned = function() {
+ChanView.prototype.unmention = function() {
     if (this.mentioned) {
         this.mentioned = false;
         _.dom.removeClass(this.el.li, "is-interesting");

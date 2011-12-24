@@ -92,7 +92,7 @@ var IrcView = (function() {
                 elements.servList.insertBefore(view.el.li, elements.servList.childNodes[index + 1]);
             } else {
                 serverViews.push(view);
-                elements.servList.prependChild(view.el.li);
+                _.dom.prependChild(elements.servList, view.el.li);
                 _.emit("new-active-serv", [view]);
                 view.activate();
             }

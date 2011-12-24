@@ -12,7 +12,6 @@
 		<script src="js/metro.js"></script>
 		<script src="js/less.js"></script>
 		<script src="js/prefix-free.js"></script>
-		<script src="js/evil.js"></script>
 		<script src="js/Underscore.js"></script>
 		<script src="js/Observer.js"></script>
 		<script src="js/util.js"></script>
@@ -30,6 +29,19 @@
 	<script src="js/app/models/Irc.js"></script>
 	<script src="js/app/views/Irc.js"></script>
 	<script src="js/app/app.js"></script>
+
+	<script>
+		var serv =  [
+			new Server({name: "Foonetic", addr: "irc.froonetic.net", nick: "CasualSuperman"}),
+			new Server({name: "Freenode", addr: "irc.freenode.net", nick: "CasualSuperman"})
+		];
+		serv[0].newChan({name: "#ufeff"});
+		_(window.App).emit("new-server", [serv[0]]);
+		serv[0].newChan({name: "#xkcd-minecraft"});
+		_(window.App).emit("new-server", [serv[1]]);
+		serv[0].newChan({name: "#mintIrc"});
+		View._serverViews[0]._chanViews[2].mention();
+	</script>
 </body>
 </html>
 <!--

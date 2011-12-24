@@ -52,9 +52,11 @@ var IrcView = (function() {
             elements.chanList,
             elements.gradient
         ]);
-        append(elements.body, elements.header);
-        append(elements.body, activeServer.getActiveChanView().el.messages);
-        append(elements.body, elements.input);
+        append(elements.body, [
+            elements.header,
+            activeServer.getActiveChanView().el.messages,
+            elements.input
+        ]);
 
         obj._serverViews = serverViews;
     }

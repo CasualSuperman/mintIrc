@@ -7,15 +7,19 @@ var MessageView = (function() {
             el;
         if (msg.user) {
             el = _.dom.create("tr", classes, [
-                td("time", msg.time),
+                td("time", msg.time.toLocaleTimeString()),
                 td("sender", (msg.user) ? msg.user.nick : ""),
                 td("message", msg.text)
             ]);
         } else {
             classes.push("status");
-            var msg = td("message", msg.text);
-            msg.colspan = 3;
-            el = _.dom.create("tr", classes, msg);
+            var temp = td("sender", "User");
+            temp.innerHTML += "&nbsp;";
+            temp.colSpan = 2;
+            el = _.dom.create("tr", classes, [
+                temp,
+                td("message", msg.text)
+            ]);
         }
         return el;
     }

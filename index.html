@@ -43,6 +43,15 @@
 		_(window.App).emit("new-server", [serv[1]]);
 		serv[0].newChan({name: "#mintIrc"});
 		View._serverViews[0]._chanViews[2].mention();
+		var msgStrs = [
+			":CasualSuperman!rwertman@40B234C2.CC758CA.9E9DB039.IP JOIN :#ufeff",
+			":CasualSuperman!rwertman@40B234C2.CC758CA.9E9DB039.IP PRIVMSG #ufeff :sup?",
+			":s0urc3@irc.foonetic.net PRIVMSG #ufeff :nm, sup CasualSuperman?",
+			":CasualSuperman@irc.foonetic.net PRIVMSG #ufeff :Well, I'm working on this interface for the web IRC thingie, and I need to add a lot of text to what I'm saying right now so I can be sure it will wrap onto multiple lines so I can make sure names will be aligned to the top of text-blocks. That's about it."
+		];
+		_.each(msgStrs, function(msg) {
+			serv[0].addMessage(new Message(msg));
+		});
 	</script>
 </body>
 </html>

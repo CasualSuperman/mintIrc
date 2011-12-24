@@ -14,10 +14,8 @@ tr {
             background-color: @grey;
             border-top: 4px solid @grey;
             color: @content-grey;
-
-            &.message {
-                padding-left: 3em;
-                width: 100%;
+            &.sender {
+                padding-right: 0;
             }
         }
     }
@@ -26,14 +24,16 @@ tr {
     td {
         vertical-align: top;
 
+        &.time {
+            color: @content;
+            padding-right: 1em;
+        }
+
         &.sender {
             color: @content-grey;
             padding-right: 1em;
             text-align: right;
 
-            .mention {
-                .accent;
-            }
             &.me {
                 color: #FFF - @background;
             }
@@ -43,6 +43,10 @@ tr {
                 .accent;
                 font-weight: bold;
             }
+        }
+
+        .mention {
+            .accent;
         }
     }
 }

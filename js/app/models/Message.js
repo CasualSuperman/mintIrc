@@ -30,7 +30,7 @@ var Message = (function() {
                     //this.user = new User(from[1], from[2], from[3]);
                     this.chan = match[3].match(chan)[1];
                     this.serv = from[3];
-                    this.text = "User " + from[1] + " has joined.";
+                    this.text = from[1] + " has joined.";
                 }
             }())
         };

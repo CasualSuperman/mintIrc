@@ -2,7 +2,7 @@ Metro = {
     ui: (function() {
         function _update() {
             var className = document.body.className;
-            if (classname === undefined || className === "")
+            if (className === undefined || className === "")
                 document.body.className = "transition";
             else
                 document.body.className += " transition";
@@ -29,11 +29,11 @@ Metro = {
             },
 
             updateAccent: function(color) {
-                this.accentColor = color;
+                Metro.ui.config.accentColor = color;
                 _update();
             },
             updateBackground: function(color) {
-                this.backgroundColor = color;
+                Metro.ui.config.backgroundColor = color;
                 _update();
             }
         }

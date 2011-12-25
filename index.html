@@ -31,16 +31,16 @@
 	<script src="js/app/app.js"></script>
 
 	<script>
-		//Metro.ui.updateBackground(Metro.ui.backgrounds.black);
-		//Metro.ui.updateAccent(Metro.ui.accents.purple);
+		Metro.ui.updateBackground(Metro.ui.backgrounds.black);
+		Metro.ui.updateAccent(Metro.ui.accents.purple);
 		var serv =  [
-			new Server({name: "Foonetic", addr: "irc.froonetic.net", nick: "CasualSuperman"}),
+			new Server({name: "Foonetic", addr: "irc.foonetic.net", nick: "CasualSuperman"}),
 			new Server({name: "Freenode", addr: "irc.freenode.net", nick: "CasualSuperman"})
 		];
 		serv[0].newChan({name: "#ufeff"});
-		_(window.App).emit("new-server", [serv[0]]);
+		window.App.addServer(serv[0]);
 		serv[0].newChan({name: "#xkcd-minecraft"});
-		_(window.App).emit("new-server", [serv[1]]);
+		window.App.addServer(serv[1]);
 		serv[0].newChan({name: "#mintIrc"});
 		View._serverViews[0]._chanViews[2].mention();
 		var msgStrs = [
@@ -49,9 +49,11 @@
 			":s0urc3@irc.foonetic.net PRIVMSG #ufeff :nm, sup CasualSuperman?",
 			":CasualSuperman@irc.foonetic.net PRIVMSG #ufeff :Well, I'm working on this interface for the web IRC thingie, and I need to add a lot of text to what I'm saying right now so I can be sure it will wrap onto multiple lines so I can make sure names will be aligned to the top of text-blocks. That's about it."
 		];
-		_.each(msgStrs, function(msg) {
-			serv[0].addMessage(new Message(msg));
-		});
+		if (!window.App.conn) {
+			_.each(msgStrs, function(msg) {
+				serv[0].addMessage(new Message(msg));
+			});
+		}
 	</script>
 </body>
 </html>

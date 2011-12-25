@@ -8,6 +8,7 @@ var Server = (function() {
         this.chans = values.chans || [];
         this.users = values.users || [];
         this.main = values.main || new Chan({})
+        console.log(this);
     }
 }());
 
@@ -22,7 +23,6 @@ Server.prototype.addMessages = function(msgs) {
                 return chan.name === msg.chan;
             });
             if (this._nick.test(msg.text)) {
-                console.log("Mentioned", msg);
                 _(chan).emit("mentioned");
                 msg.mentioned = true;
                 var texts = msg.text.split(this._nick),
@@ -35,7 +35,8 @@ Server.prototype.addMessages = function(msgs) {
                 list.pop();
                 msg.text = list;
             }
-            chan.addMessage(msg);
+            if (chan)
+                chan.addMessage(msg);
         } else {
             return "Not a message.";
         }

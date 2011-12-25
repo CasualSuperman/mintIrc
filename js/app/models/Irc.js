@@ -1,6 +1,6 @@
 var Irc = (function() {
     var connect = function() {
-        var ws = new WebSocket("wss://" + window.location.host + ":3654");
+        var ws = new WebSocket("ws://localhost:3654");
         var _ws = _(ws);
         ws.onmessage = function(e) {
             _ws.emit("message", [e]);
@@ -39,8 +39,19 @@ var Irc = (function() {
     }
 }());
 
+Irc.prototype.addServer = function(serv) {
+    var exists = _.find(this.servers, function(server) {
+        return server.addr === serv.addr;
+    });
+    if (!exists) {
+        this.servers.push(serv);
+        _(this).emit("new-server", [serv])
+    }
+};
+
 Irc.prototype.handle = function() {
-    var _conn = _(this.conn);
+    var _conn = _(this.conn),
+        context = this;
     _conn.on("open", function(e) {
         console.log("Connection open!");
     });
@@ -48,7 +59,15 @@ Irc.prototype.handle = function() {
         console.log("Connection closed.");
     });
     _conn.on("message", function(e) {
-        console.log(JSON.parse(e));
+        var info = JSON.parse(e.data);
+        var serv = _.find(context.servers, function(serv) {
+            return serv.addr === info.Server;
+        });
+        if (serv) {
+            serv.addMessage(new Message(info.Line));
+        } else {
+            console.log("Data sent with server " + info.Server + ", but no such server found.");
+        }
     });
     _conn.on("error", function(e) {
         console.log("Connection error: ", e);

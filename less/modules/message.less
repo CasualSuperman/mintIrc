@@ -1,7 +1,7 @@
 tr {
     // Message Lines
     &.message {
-
+        color: @content;
     }
     &.status {
         color: @content-grey;
@@ -39,7 +39,8 @@ tr {
             }
         }
         &.message {
-            &.room {
+            width: 100%;
+            .room {
                 .accent;
                 font-weight: bold;
             }

@@ -23,6 +23,7 @@ Server.prototype.addMessages = function(msgs) {
             });
             if (this._nick.test(msg.text)) {
                 _(chan).emit("mentioned");
+                _(this).emit("mentioned");
                 msg.mentioned = true;
                 var texts = msg.text.split(this._nick),
                     list  = [],

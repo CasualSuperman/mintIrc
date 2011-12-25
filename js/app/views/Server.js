@@ -38,7 +38,8 @@ var ServerView = (function() {
     return function(serv) {
         setup(this, serv);
         var chanViews = this._chanViews,
-            elements  = this.el;
+            elements  = this.el,
+            context   = this;
         // Handle new channels.
         _(serv).on("new-chan", function(chan) {
             var view = new ChanView(chan);
@@ -56,6 +57,11 @@ var ServerView = (function() {
                 _.emit("new-active-chan", [view]);
             }
         });
+        _(serv).on("mentioned", function() {
+            if (!context.active) {
+                context.mention();
+            }
+        });
     }
 }());
 
@@ -69,7 +75,7 @@ ServerView.prototype.getActiveChanView = function() {
 ServerView.prototype.activate = function() {
     _.dom.addClass(this.el.li, "is-active");
     this.active = true;
-    this.unmentioned();
+    this.unmention();
 };
 
 ServerView.prototype.deactivate = function() {
@@ -77,12 +83,12 @@ ServerView.prototype.deactivate = function() {
     this.active = false;
 };
 
-ServerView.prototype.mentioned = function() {
+ServerView.prototype.mention = function() {
     _.dom.addClass(this.el.li, "is-interesting");
     this.mentioned = true;
 };
 
-ServerView.prototype.unmentioned = function() {
+ServerView.prototype.unmention = function() {
     if (this.mentioned) {
         this.mentioned = false;
         _.dom.removeClass(this.el.li, "is-interesting");

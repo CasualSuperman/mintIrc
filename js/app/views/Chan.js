@@ -1,14 +1,15 @@
 var ChanView = (function() {
     return function(chan) {
-        var dom = _.dom;
-        var elements = {
+        var dom = _.dom,
+            elements = {
             // The Menu item.
             li: dom.create("li", ["chan"], chan.name),
             // The "body" view.
             messages: dom.create("div", ["log_container", "is-selectable"],
                           dom.create("table", ["log"],
                             dom.create("tbody")))
-        };
+        },
+            context = this;
         // Get a reference to our table for ease of use.
         var log = elements.messages.getElementsByTagName("tbody")[0];
 
@@ -17,23 +18,25 @@ var ChanView = (function() {
             log.appendChild(new MessageView(msg).el);
         });
 
-        _(chan).on("new-msgs", (function(context) {
-            return function(premsgs, postmsgs) {
-                _(premsgs).each(function(msg) {
-                    _.dom.prependChild(log, new MessageView(msg).el);
-                }, context);
-                _(postmsgs).each(function(msg) {
-                    log.appendChild(new MessageView(msg).el);
-                }, context);
-            };
-        }(this)));
+        _(chan).on("new-msgs", function(premsgs, postmsgs) {
+            _(premsgs).each(function(msg) {
+                _.dom.prependChild(log, new MessageView(msg).el);
+            }, context);
+            _(postmsgs).each(function(msg) {
+                log.appendChild(new MessageView(msg).el);
+            }, context);
+        });
 
-        elements.li.onclick = (function(context) {
-            return function() {
-                _.emit("new-active-chan", [context]);
-                context.activate();
-            };
-        }(this));
+        _(chan).on("mentioned", function() {
+            if (!context.active) {
+                context.mention();
+            }
+        });
+
+        elements.li.onclick = function() {
+            _.emit("new-active-chan", [context]);
+            context.activate();
+        };
 
         this.el = elements;
         this.active = false;

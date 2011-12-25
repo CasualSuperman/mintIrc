@@ -8,7 +8,6 @@ var Server = (function() {
         this.chans = values.chans || [];
         this.users = values.users || [];
         this.main = values.main || new Chan({})
-        console.log(this);
     }
 }());
 

@@ -1,20 +1,17 @@
 var Irc = (function() {
     var connect = function() {
-        var ws = new WebSocket("ws://localhost:3654");
-        var _ws = _(ws);
-        ws.onmessage = function(e) {
+        var sock = new io.connect(window.location.hostname);
+        var _ws = _(sock);
+        sock.on('message', function(e) {
             _ws.emit("message", [e]);
-        };
-        ws.onerror = function(e) {
-            _ws.emit("error", [e]);
-        };
-        ws.onclose = function(e) {
+        });
+        sock.on('disconnect', function(e) {
             _ws.emit("close", [e]);
-        };
-        ws.onopen = function(e) {
+        });
+        sock.on('connect', function(e) {
             _ws.emit("open", [e]);
-        };
-        return ws;
+        });
+        return sock;
     }
     return function(values) {
         var dom = _.dom;
@@ -33,7 +30,7 @@ var Irc = (function() {
         };
         values = values || {};
         this.servers = values.servers || [];
-        this.conn    = values.conn || (window.WebSocket) ? connect.call(this) : {};
+        this.conn    = connect();
         this.handle();
         this.el = elements;
     }
@@ -58,8 +55,7 @@ Irc.prototype.handle = function() {
     _conn.on("close", function(e) {
         console.log("Connection closed.");
     });
-    _conn.on("message", function(e) {
-        var info = JSON.parse(e.data);
+    _conn.on("message", function(info) {
         var serv = _.find(context.servers, function(serv) {
             return serv.addr === info.Server;
         });

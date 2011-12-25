@@ -24,8 +24,8 @@ var MessageView = (function() {
                 classes.push("status");
                 var temp = td("sender", "User");
                 temp.innerHTML += "&nbsp;";
-                temp.colSpan = 2;
                 el = _.dom.create("tr", classes, [
+                    td("time"),
                     temp,
                     td("message", msg.text)
                 ]);

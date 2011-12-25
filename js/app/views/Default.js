@@ -33,3 +33,9 @@ DefaultServerView.prototype.deactivate = function() {
 MainChanView.prototype.deactivate = function() {
     
 };
+DefaultServerView.prototype.activate = function() {
+    
+};
+MainChanView.prototype.activate = function() {
+    
+};

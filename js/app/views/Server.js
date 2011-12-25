@@ -7,7 +7,7 @@ var ServerView = (function() {
             // Chan list
             chans: dom.create("ul", ["chans"])
         };
-        obj.main = new MainChanView(serv.main);
+        obj.main = new ChanView(serv.main);
 
         // Get our list of chanviews.
         var chanViews = _.map(serv.chans, function(chan) {

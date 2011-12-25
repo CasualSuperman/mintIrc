@@ -32,6 +32,14 @@ var Message = (function() {
                     this.serv = from[3];
                     this.text = from[1] + " has joined.";
                 }
+            }()),
+            "372": (function() {
+                return function(match) {
+                    this.global = true;
+                    this.mono   = true;
+                    this.text = match[3].split(":").slice(1).join(":");
+                    this.user = {};
+                }
             }())
         };
     return function(str) {
@@ -42,6 +50,13 @@ var Message = (function() {
             this.action = match[2];
             var extra = match[3];
             if (!actions[this.action]) {
+                if (!window.actions) {
+                    window.actions = {};
+                }
+                if (window.actions[this.action])
+                    window.actions[this.action] = window.actions[this.action] + 1;
+                else 
+                    window.actions[this.action] = 1;
                 console.log("Unknown action", match, str);
             } else {
                 actions[this.action].call(this, match);

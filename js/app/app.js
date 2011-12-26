@@ -5,5 +5,5 @@
  *
  * Date: Thu Apr 07 14:26:07 2011 -0500
  */
-window.App  = new Irc();
+window.App  = new Irc(false);
 window.View = new IrcView(window.App);

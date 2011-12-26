@@ -1,6 +1,6 @@
 var Irc = (function() {
-    var connect = function() {
-        var sock = new io.connect(window.location.hostname);
+    var connect = function(addr) {
+        var sock = new io.connect(addr);
         var _ws = _(sock);
         sock.on('message', function(e) {
             _ws.emit("message", [e]);
@@ -13,7 +13,7 @@ var Irc = (function() {
         });
         return sock;
     }
-    return function(values) {
+    return function(addr) {
         var dom = _.dom;
         var elements = {
             body: document.body,
@@ -28,9 +28,8 @@ var Irc = (function() {
                 return div;
             }())
         };
-        values = values || {};
-        this.servers = values.servers || [];
-        this.conn    = connect();
+        this.servers = [];
+        this.conn    = (addr) ? connect(addr) : {};
         this.handle();
         this.el = elements;
     }

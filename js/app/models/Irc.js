@@ -1,18 +1,4 @@
 var Irc = (function() {
-    var connect = function(addr) {
-        var sock = io.connect(addr);
-        var _ws = _(sock);
-        sock.on('message', function(e) {
-            _ws.emit("message", [e]);
-        });
-        sock.on('disconnect', function(e) {
-            _ws.emit("close", [e]);
-        });
-        sock.on('connect', function(e) {
-            _ws.emit("open", [e]);
-        });
-        return sock;
-    }
     return function(addr) {
 		var dom = _.dom;
 		var elements = {
@@ -30,8 +16,8 @@ var Irc = (function() {
 		};
         this.servers = [];
         this.conns    = (addr) ? {
-			mintI: connect(addr + "/mintI"),
-			irc:   connect(addr + "/irc") 	
+			mintI: io.connect(addr + "/mintI"),
+			irc:   io.connect(addr + "/irc") 	
 		}: {};
         this.handle();
         this.el = elements;
@@ -94,11 +80,12 @@ Irc.prototype.handle = function() {
 			chan = serv.newChan({name: info.chan});
 		}
 		info.join = true;
-		chan.addMessage(info);
+		chan.addMessage(new Message(info));
 	});
-	irc.on('message#', function(info) {
+	irc.on('message', function(info) {
+		console.log("Message received.");
 		app.getServer(info.addr).getChan(info.chan)
-			.addMessage(info);
+			.addMessage(new Message(info));
 	});
 	irc.on('topic', function(info) {
 		var chan = app.getServer(info.addr).getChan(info.chan);
@@ -129,7 +116,7 @@ Irc.prototype.handle = function() {
 		        return serv.addr === info.addr;
 		    });
 		    if (serv) {
-		        serv.addMessage(new Message(info.msg));
+		        serv.addMessage(info.msg);
 		    } else {
 		        console.log("Data sent with server " + info.Server + ", but no such server found.");
 		    }

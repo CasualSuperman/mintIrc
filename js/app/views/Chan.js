@@ -33,6 +33,10 @@ var ChanView = (function() {
             }
         });
 
+		_(chan).on("removed", function() {
+			_(this).emit("removed");
+		});
+
         elements.li.onclick = function() {
             _.emit("new-active-chan", [context]);
             context.activate();

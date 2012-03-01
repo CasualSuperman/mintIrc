@@ -8,6 +8,39 @@ var Server = (function() {
         this.chans = values.chans || [];
         this.users = values.users || [];
         this.main = values.main || new Chan({})
+
+		this.getChan = function(info) {
+			var chan = _.filter(this.chans, function(chan) {
+				return chan.name === info;
+			});
+			if (chan.length > 0)
+				return chan[0];
+		};
+
+		this.newChan = function(info) {
+			if (!_(this.chans).any(function(chan) {
+				return chan.name === info.name;
+			})) {
+				var chan = new Chan(info);
+				this.chans.push(chan);
+				_(this).emit("new-chan", [chan]);
+				return chan;
+			}
+		};
+
+		this.removeChan = function(name) {
+			var _chans = _(this.chans);
+			var chans = _chans.filter(function(chan) {
+				return chan.name === name;
+			});
+			if (chans.length > 0) {
+				var chan = chans[0];
+				_(chan).emit('removed');
+				this.chans = _chans.filter(function(chan) {
+					chan.name !== name;
+				});
+			}
+		};
     }
 }());
 
@@ -47,13 +80,3 @@ Server.prototype.addMessages = function(msgs) {
     }, this);
 };
 
-Server.prototype.newChan = function(info) {
-    if (!_(this.chans).any(function(chan) {
-        return chan.name === info.name;
-    })) {
-        var chan = new Chan(info);
-        this.chans.push(chan);
-        _(this).emit("new-chan", [chan]);
-        return chan;
-    }
-};

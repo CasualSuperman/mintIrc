@@ -56,8 +56,15 @@ var ServerView = (function() {
                 _.dom.prependChild(elements.chans, view.el.li);
                 _.emit("new-active-chan", [view]);
             }
+			_(view).on('removed', function() {
+				elements.chans.removeChild(view.el.li);
+				chanViews = _(chanViews).filter(function(chan) {
+					return view !== chan;
+				});
+			});
         });
-        _(serv).on("mentioned", function() {
+
+		_(serv).on("mentioned", function() {
             if (!context.active) {
                 context.mention();
             }

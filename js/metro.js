@@ -41,7 +41,7 @@ Metro = {
 };
 Metro.ui.config = (function() {
     return {
-        accentColor: Metro.ui.accents.blue,
+        accentColor: Metro.ui.accents.green,
         backgroundColor: Metro.ui.backgrounds.white,
         transitionLength: 500
     }

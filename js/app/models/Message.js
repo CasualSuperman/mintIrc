@@ -41,26 +41,60 @@ var Message = (function() {
                     this.user = {};
                 }
             }())
-        };
-    return function(str) {
-        var match = str.match(reg);
-        if (match !== null) {
-            this.time = new Date();
-            this.serv = match[1];
-            this.action = match[2];
-            var extra = match[3];
-            if (!actions[this.action]) {
-                if (!window.actions) {
-                    window.actions = {};
-                }
-                if (window.actions[this.action])
-                    window.actions[this.action] = window.actions[this.action] + 1;
-                else 
-                    window.actions[this.action] = 1;
-                console.log("Unknown action", match, str);
-            } else {
-                actions[this.action].call(this, match);
-            }
-        }
+        },
+		str = (function(str) {
+        	var match = str.match(reg);
+        	if (match !== null) {
+        	    this.time = new Date();
+        	    this.serv = match[1];
+        	    this.action = match[2];
+        	    var extra = match[3];
+        	    if (!actions[this.action]) {
+        	        if (!window.actions) {
+        	            window.actions = {};
+        	        }
+        	        if (window.actions[this.action])
+        	            window.actions[this.action] = window.actions[this.action] + 1;
+        	        else 
+        	            window.actions[this.action] = 1;
+        	        console.log("Unknown action", match, str);
+        	    } else {
+        	        actions[this.action].call(this, match);
+        	    }
+			}
+        }),
+		obj = (function(obj) {
+			if (obj.join) {
+				console.log(obj.nick + " has joined.");
+				this.time = new Date();
+				this.serv = obj.addr;
+				this.text = obj.nick + " has joined.";
+				this.chan = obj.chan;
+			} else if (obj.topic) {
+				this.global = true;
+				this.text = obj.nick + " changed the topic to: " + obj.topic;
+				this.user = new User(obj.nick);
+			} else if (obj.reason) {
+				this.time = new Date();
+				this.global = true;
+				this.text = obj.nick + " has left: " + obj.reason;
+			} else if (obj.msg) {
+				this.time = new Date();
+				this.serv = obj.addr;
+				this.text = obj.msg;
+				this.chan = obj.chan;
+				this.user = obj.nick;
+			} else {
+				console.log("Unknown type.");
+				debugger;
+			}
+			return this;
+		});
+    return function(info) {
+		if (_.isString(info)) {
+			return new str(info);
+		} else {
+			return new obj(info);
+		}
     };
 }());

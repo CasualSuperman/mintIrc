@@ -7,6 +7,8 @@
 		<!-- Better is to use a go template and add browser-specific code. -->
 
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin,latin-ext" rel='stylesheet' type='text/css'>
+		<link rel="prefetch" href="less/main.less" />
+		<link rel="prerender" href="less/main.less" />
 		<link rel="stylesheet/less" type="text/css" href="less/main.less" media="screen" />
 
 		<script src="js/metro.js"></script>
@@ -33,8 +35,9 @@
 	<script src="js/app/app.js"></script>
 
 	<script>
-		//Metro.ui.updateBackground(Metro.ui.backgrounds.black);
-		//Metro.ui.updateAccent(Metro.ui.accents.purple);
+	/*
+		Metro.ui.updateBackground(Metro.ui.backgrounds.white);
+		Metro.ui.updateAccent(Metro.ui.accents.green);
 		var serv =  [
 			new Server({name: "Foonetic", addr: "irc.foonetic.net", nick: "CasualSuperman"}),
 			new Server({name: "Freenode", addr: "irc.freenode.net", nick: "CasualSuperman"})
@@ -44,6 +47,7 @@
 		serv[0].newChan({name: "#xkcd-minecraft"});
 		window.App.addServer(serv[1]);
 		serv[0].newChan({name: "#mintIrc"});
+		*/
 	</script>
 </body>
 </html>

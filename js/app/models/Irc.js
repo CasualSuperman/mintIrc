@@ -84,8 +84,9 @@ Irc.prototype.handle = function() {
 	});
 	irc.on('message', function(info) {
 		console.log("Message received.");
-		app.getServer(info.addr).getChan(info.chan)
-			.addMessage(new Message(info));
+		app.getServer(info.addr).addMessage(new Message(info));
+			//.getChan(info.chan)
+			//.addMessage(new Message(info));
 	});
 	irc.on('topic', function(info) {
 		var chan = app.getServer(info.addr).getChan(info.chan);

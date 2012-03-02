@@ -58,6 +58,28 @@ var IrcView = (function() {
             elements.input
         ]);
 
+		var handleInput = function(e) {
+			console.log(this);
+			if (e.keyCode === 9) {
+				var match = /\b(.*)$/.apply(this.value);
+				
+			} else if (e.keyCode === 13) {
+				var server  = obj.getActiveServerView();
+				var channel = server.getActiveChanView();
+				var addr    = server.serv.addr;
+				var chan    = channel.chan.name;
+				var msg     = this.value;
+				base.conns.irc.emit("say", {addr: addr, chan: chan, msg: msg});
+				this.value = "";
+			}
+		};
+
+		if (elements.input.addEventListener) {
+			elements.input.addEventListener("keypress", handleInput, false);
+		} else {
+			elements.input.attachEvent("onkeypress", handleInput);
+		}
+
         obj._serverViews = serverViews;
     }
     return function(irc) {
@@ -75,7 +97,14 @@ var IrcView = (function() {
             elements.body.replaceChild(newView.el.messages, oldView.el.messages);
             newView.el.messages.style.bottom = elements.input.offsetHeight + "px";
             newView.el.messages.style.top    = elements.header.offsetHeight + "px";
+			elements.gradient.innerHTML = newView.chan.topic.str;
+			elements.gradient.title = "Set by " + newView.chan.topic.nick;
         });
+
+		_.on("new-topic", function(chan) {
+			elements.gradient.innerHTML = chan.topic.str;
+			elements.gradient.title = "Set by " + chan.topic.nick;
+		});
 
         _.on("new-active-serv", function(newView) {
             var oldView = context.getActiveServerView();
@@ -88,6 +117,8 @@ var IrcView = (function() {
             append(newView.el.chans, elements.newChan);
             newChan.el.messages.style.bottom = elements.input.offsetHeight + "px";
             newChan.el.messages.style.top    = elements.header.offsetHeight + "px";
+			elements.gradient.innerHTML = newChan.chan.topic.str;
+			elements.gradient.title = "Set by " + newChan.chan.topic.nick;
         });
 
         /* Local event handling. */

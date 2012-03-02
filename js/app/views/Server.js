@@ -69,6 +69,7 @@ var ServerView = (function() {
                 context.mention();
             }
         });
+		this.serv = serv;
     }
 }());
 

@@ -11,8 +11,15 @@
 
 	#gradient {
 		background: linear-gradient(top, @background 0%, fadeout(@background, 100%) 100%);
+		font-size: 12pt;
 		height: 25px;
+		overflow: hidden;
+		padding-left: 2em;
 		width: 100%;
+
+		&:hover {
+			height: auto;
+		}
 	}
 	.nonitem {
 		margin-left: 0;

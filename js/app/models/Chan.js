@@ -25,7 +25,10 @@ Chan.prototype.preMessages = function(msgs) {
     _(this).emit("new-msgs", [msgs, []]);
 };
 
-Chan.prototype.setTopic = function(str) {
-    this.topic = str;
+Chan.prototype.setTopic = function(str, setBy) {
+    this.topic = {
+		str: str,
+		nick: setBy
+	};
     _(this).emit("new-topic");
 }

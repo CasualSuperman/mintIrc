@@ -34,7 +34,13 @@ var ChanView = (function() {
         });
 
 		_(chan).on("removed", function() {
-			_(this).emit("removed");
+			_(context).emit("removed");
+		});
+
+		_(chan).on("new-topic", function() {
+			if (context.active) {
+				_.emit("new-topic", [chan]);
+			}
 		});
 
         elements.li.onclick = function() {
@@ -45,6 +51,7 @@ var ChanView = (function() {
         this.el = elements;
         this.active = false;
         this.mentioned = false;
+		this.chan = chan;
     };
 }());
 

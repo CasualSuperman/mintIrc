@@ -89,8 +89,7 @@ Irc.prototype.handle = function() {
 	});
 	irc.on('topic', function(info) {
 		var chan = app.getServer(info.addr).getChan(info.chan);
-		chan.setTopic(info.topic);
-		chan.addMessage(new Message(info));
+		chan.setTopic(info.topic, info.nick);
 	});
 	irc.on('part', function(info) {
 		var server = app.getServer(info.addr);
@@ -125,4 +124,8 @@ Irc.prototype.handle = function() {
 		    console.log("Connection error: ", e);
 		});
 	}
-}
+};
+
+Irc.prototype.connect = function(network, channels) {
+	this.conns.irc.emit("connect", {addr: network, chans: channels || []});
+};

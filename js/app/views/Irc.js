@@ -4,6 +4,7 @@ var IrcView = (function() {
     function setup(obj, base) {
         var elements = {
                 body: document.body,
+				modal: dom.create("div"),
                 modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
                 modServ: new ModalServWindow(), //dom.create("div", ["modal", "newServ"]),
                 servList: dom.create("ul", ["servs"]),
@@ -13,8 +14,21 @@ var IrcView = (function() {
                 input: dom.create("input", ["chat"]),
                 gradient: dom.create("div")
         };
+		elements.body.appendChild(elements.modal);
         elements.gradient.id = "gradient";
+		elements.modal.id = "modal";
         obj.el = elements;
+
+		var hideModal = function() {
+			dom.removeClass(elements.modal, "show");
+			dom.clear(elements.modal);
+		};
+
+		if (elements.modal.addEventListener) {
+			elements.modal.addEventListener("click", hideModal, false);
+		} else {
+			elements.modal.attachEvent("onclick", hideModal);
+		}
 
         // View for 0 servers.
         obj._defaultServ = new DefaultServerView();
@@ -37,10 +51,12 @@ var IrcView = (function() {
 
         /* Dom Events. */
         elements.newServ.onclick = function() {
-            append(elements.body, elements.modServ.el);
+            append(elements.modal, elements.modServ.el);
+			dom.addClass(elements.modal, "show");
         };
         elements.newChan.onclick = function() {
-            append(elements.body, elements.modChan.el);
+            append(elements.modal, elements.modChan.el);
+			dom.addClass(elements.modal, "show");
         };
 
         /* Dom Structure. */

@@ -9,7 +9,7 @@
         };
     }
 
-    function createNode(name, classes, contents) {
+    function createNode(name, classes, contents, attrs) {
         var elem;
         var args = arguments.length;
         if (_(name).isString()) {
@@ -24,12 +24,15 @@
         if (!_(contents).isUndefined()) {
             appendThings(elem, contents);
         }
+		_(attrs).forEach(function(val, attr) {
+			elem[attr] = val;
+		});
         return elem;
     }
 
     function appendThings(node, items) {
         var _items = _(items);
-        if (_items.isElement() || items.nodeType === 3) {
+        if (_items.isElement() || [3, 11].indexOf(items.nodeType) !== -1) {
             node.appendChild(items);
         } else if (_items.isArray()) {
             _items.each(function(item) {
@@ -38,7 +41,7 @@
         } else if (_items.isString()) {
             node.appendChild(document.createTextNode(items));
         } else if (_items.toArray().length > 0) {
-            _each(_items.toArray(), function(item) {
+            _.each(_items.toArray(), function(item) {
                 appendThings(node, item);
             });
         } else {

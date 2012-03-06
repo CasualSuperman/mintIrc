@@ -11,6 +11,7 @@ var ChanView = (function() {
         },
             context = this;
         // Get a reference to our table for ease of use.
+		var container = elements.messages;
         var log = elements.messages.getElementsByTagName("tbody")[0];
 
         // Append all the already made messages.
@@ -19,12 +20,18 @@ var ChanView = (function() {
         });
 
         _(chan).on("new-msgs", function(premsgs, postmsgs) {
+			var toScroll =
+				container.scrollTop === (container.scrollHeight
+										- container.clientHeight);
             _(premsgs).each(function(msg) {
                 _.dom.prependChild(log, new MessageView(msg).el);
             }, context);
             _(postmsgs).each(function(msg) {
                 log.appendChild(new MessageView(msg).el);
             }, context);
+			if (toScroll) {
+				container.scrollTop = container.scrollHeight;
+			}
         });
 
         _(chan).on("mentioned", function() {

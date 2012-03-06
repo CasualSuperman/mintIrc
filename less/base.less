@@ -7,3 +7,11 @@ body {
         padding: 0;
     }
 }
+
+a {
+	color: @accent;
+
+	&:visited {
+		color: desaturate(@accent, 60%);
+	}
+}

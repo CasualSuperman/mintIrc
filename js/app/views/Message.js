@@ -25,6 +25,8 @@ var MessageView = (function() {
                     td("sender", (msg.user) ? msg.user.nick : ""),
 					message
                 ]);
+				_.dom.prependChild(el.querySelector('.sender'),
+					_.dom.create("span", "prefix", msg.user.prefix));
             } else {
                 classes.push("status");
                 var temp = td("sender", "User");

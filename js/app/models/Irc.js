@@ -100,6 +100,11 @@ Irc.prototype.handle = function() {
 			chan.addMessage(new Message(info));
 		}
 	});
+	irc.on('names', function(info) {
+		console.log(info);
+		var chan = app.getServer(info.addr).getChan(info.chan);
+		chan.addUsers(info.names);
+	});
 	for (var conn in this.conns) {
 		var _conn  = _(this.conns[conn]),
 	    	context = this;

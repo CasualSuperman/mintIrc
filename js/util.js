@@ -129,6 +129,29 @@
         }
     }
 
+	function select(node, from, to) {
+		if (arguments.length === 1) {
+			from = 0;
+			to   = node.value.length;
+		} else if (arguments.length === 2) {
+			to = from;
+		}
+		console.log(node, from, to);
+		if (node.selectionStart !== undefined) {
+			console.log("Using selection DOM properties.");
+			node.setSelectionRange(from, to);
+		} else if (node.createTextRange) {
+			console.log("Using textRange.");
+			var range = node.createTextRange();
+			range.moveStart('character', from);
+			range.moveEnd('character', to);
+			range.select();
+		} else {
+			console.log("No supported method found.");
+			node.focus();
+		}
+	}
+
     _.dom = {
         create:   createNode,
         template: templateNode,
@@ -138,8 +161,20 @@
         clear:        clear,
         hide:         hide,
         append: appendThings,
-        prependChild: prepend
+        prependChild: prepend,
+		select: select
     };
+	_.event = {
+		cancel: function(e) {
+			console.log(e);
+			if (e && e.stopPropagation) {
+				e.preventDefault();
+				e.stopPropagation();
+			} else {
+				window.event.cancelBubble = true;
+			}
+		}
+	};
     _.mixin({
         indexBy: function(list, func) {
             for(var i = 0, len = list.length; i < len; ++i) {

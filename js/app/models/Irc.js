@@ -101,7 +101,6 @@ Irc.prototype.handle = function() {
 		}
 	});
 	irc.on('names', function(info) {
-		console.log(info);
 		var chan = app.getServer(info.addr).getChan(info.chan);
 		chan.addUsers(info.names);
 	});

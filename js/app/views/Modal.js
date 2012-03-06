@@ -30,15 +30,15 @@ var ModalServWindow = (function() {
 		this.el.id = "newServ";
 
 		if (this.el.addEventListener) {
-			this.el.addEventListener("click", function(e) {
-				e.stopPropagation();
-				return false;
-			});
+			this.el.addEventListener("click", _.event.cancel);
+		/*	function(e) {
+				_.event.cancel(e);
+			});*/
 		} else {
-			this.el.attachEvent("onclick", function() {
-				window.event.cancelBubble = true;
-				return false;
-			});
+			this.el.attachEvent("onclick", _.event.cancel);
+			/*function() {
+				_.event.cancel();
+			}); */
 		}
 
 		return this;

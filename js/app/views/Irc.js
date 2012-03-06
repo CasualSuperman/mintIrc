@@ -11,13 +11,19 @@ var IrcView = (function() {
                 newServ: dom.create("li", ["serv", "nonitem"], "+"),
                 newChan: dom.create("li", ["chan", "nonitem"], "+"),
                 header: dom.create("header", ["connection-list"]),
-                input: dom.create("input", ["chat"]),
+                input: dom.create("input", ["chat", "is-selectable"]),
                 gradient: dom.create("div")
         };
 		elements.body.appendChild(elements.modal);
         elements.gradient.id = "gradient";
 		elements.modal.id = "modal";
         obj.el = elements;
+
+		obj.history = {
+			messages: [],
+			position: 0,
+			current: ""
+		};
 
 		var hideModal = function() {
 			dom.removeClass(elements.modal, "show");
@@ -74,25 +80,58 @@ var IrcView = (function() {
             elements.input
         ]);
 
+		var keys = {
+			"tab": 9,
+			"enter": 13,
+			"up": 38,
+			"down": 40
+		};
+
 		var handleInput = function(e) {
-			if (e.keyCode === 9) {
+			if (e.keyCode === keys["tab"]) {
 				var match = /\b(.*)$/.apply(this.value);
-				
-			} else if (e.keyCode === 13) {
+			} else if (e.keyCode === keys["enter"]) {
 				var server  = obj.getActiveServerView();
 				var channel = server.getActiveChanView();
 				var addr    = server.serv.addr;
 				var chan    = channel.chan.name;
 				var msg     = this.value;
 				base.conns.irc.emit("say", {addr: addr, chan: chan, msg: msg});
+				obj.history.messages.unshift(msg);
+				obj.history.position = -1;
 				this.value = "";
+			} else if (e.keyCode === keys["up"]) {
+				var position = ++obj.history.position;
+				if (position === 0) {
+					obj.history.current = this.value;
+				}
+				if (position < obj.history.messages.length) {
+					this.value = obj.history.messages[position];
+				} else {
+					obj.history.position--;
+				}
+				console.log("Selecting.");
+				_.dom.select(this);
+				_.event.cancel(e);
+			} else if (e.keyCode === keys["down"]) {
+				var position = --obj.history.position;
+				if (position === -1) {
+					this.value = obj.history.current;
+					obj.history.current = "";
+					_.dom.select(this, this.value.length);
+				} else {
+					this.value = obj.history.messages[position];
+					console.log("Selecting.");
+					_.dom.select(this);
+				}
+				_.event.cancel(e);
 			}
 		};
 
 		if (elements.input.addEventListener) {
-			elements.input.addEventListener("keypress", handleInput, false);
+			elements.input.addEventListener("keydown", handleInput, false);
 		} else {
-			elements.input.attachEvent("onkeypress", handleInput);
+			elements.input.attachEvent("onkeydown", handleInput);
 		}
 
         obj._serverViews = serverViews;

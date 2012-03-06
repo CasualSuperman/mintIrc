@@ -2,7 +2,8 @@ TODO
 ====
 
 *	Tab-completion for nicks
-*	Link parsing for messages.
+*	Scroll up through past messages.
+*	Youtube Previews
 *	Actions (/me)
 *	Chat actions (/join, /part, /msg)
 *	Join and Connect dialogs.

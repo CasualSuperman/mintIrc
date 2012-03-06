@@ -1,4 +1,5 @@
 var MessageView = (function() {
+	var url = /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/ig;
     function toNode(msg) {
         var classes = ["message"];
         if (msg.mono) classes.push("mono");
@@ -15,10 +16,14 @@ var MessageView = (function() {
             ]);
         } else {
             if (msg.user) {
+				var text = msg.text;
+                var message = td("message", text);
+				message.innerHTML =
+					message.innerHTML.replace(url, "<a href='$&'>$&</a>");
                 el = _.dom.create("tr", classes, [
                     td("time", msg.time.toLocaleTimeString()),
                     td("sender", (msg.user) ? msg.user.nick : ""),
-                    td("message", msg.text)
+					message
                 ]);
             } else {
                 classes.push("status");

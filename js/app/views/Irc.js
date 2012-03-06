@@ -75,7 +75,6 @@ var IrcView = (function() {
         ]);
 
 		var handleInput = function(e) {
-			console.log(this);
 			if (e.keyCode === 9) {
 				var match = /\b(.*)$/.apply(this.value);
 				

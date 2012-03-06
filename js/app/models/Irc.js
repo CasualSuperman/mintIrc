@@ -83,7 +83,6 @@ Irc.prototype.handle = function() {
 		chan.addMessage(new Message(info));
 	});
 	irc.on('message', function(info) {
-		console.log("Message received.");
 		app.getServer(info.addr).addMessage(new Message(info));
 			//.getChan(info.chan)
 			//.addMessage(new Message(info));

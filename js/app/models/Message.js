@@ -1,6 +1,5 @@
 var Message = (function() {
     return function(info) {
-		console.log("Message.");
 		if (info.join) {
 			console.log(info.nick + " has joined.");
 			this.time = new Date();

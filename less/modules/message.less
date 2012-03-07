@@ -1,66 +1,66 @@
 tr {
-    // Message Lines
-    &.message {
-        color: @content;
-        padding-left: 1em;
-    }
-    &.status {
-        color: @content-grey;
+	// Message Lines
+	&.message {
+		color: @content;
+		padding-left: 1em;
+	}
+	&.status {
+		color: @content-grey;
 
-        &.mono {
-            font-family: "Anonymous Pro";
-            white-space: pre;
-        }
+		&.mono {
+			font-family: "Anonymous Pro";
+			white-space: pre;
+		}
 
-        td {
-            background-color: @grey;
-            border-top: 4px solid @grey;
-            color: @content-grey;
-            &.sender {
-                padding-right: 0;
-            }
-        }
-    }
-    &.mentioned .sender {
-        .accent;
-    }
-    &.status.mentioned .sender {
-        color: inherit;
-    }
+		td {
+			background-color: @grey;
+			border-top: 4px solid @grey;
+			color: @content-grey;
+			&.sender {
+				padding-right: 0;
+			}
+		}
+	}
+	&.mentioned .sender {
+		.accent;
+	}
+	&.status.mentioned .sender {
+		color: inherit;
+	}
 
-    // Messages
-    td {
-        vertical-align: top;
+	// Messages
+	td {
+		vertical-align: top;
 
-        &.time {
-            color: @content;
-//            display: none;
-            padding-right: 1em;
-        }
+		&.time {
+			color: @content;
+//			display: none;
+			padding-right: 1em;
+		}
 
-        &.sender {
-            color: @content-grey;
-            padding-right: 1em;
-            text-align: right;
+		&.sender {
+			color: @content-grey;
+			padding-right: 1em;
+			text-align: right;
 
-            &.me {
-                color: #FFF - @background;
-            }
-        }
-        &.message {
-            width: 100%;
-            .room {
-                .accent;
-                font-weight: bold;
-            }
-        }
+			&.me {
+				color: #FFF - @background;
+			}
+		}
+		&.message {
+			width: 100%;
+			.room {
+				.accent;
+				font-weight: bold;
+			}
+		}
 
-        .mention {
-            .accent;
-        }
+		.mention {
+			.accent;
+		}
 
 		.prefix {
 			font-family: "Anonymous Pro", "Courier New", "Nimbus Mono L", monospace;
 		}
-    }
+	}
 }

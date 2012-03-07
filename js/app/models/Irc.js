@@ -1,5 +1,5 @@
 var Irc = (function() {
-    return function(addr) {
+	return function(addr) {
 		var dom = _.dom;
 		var elements = {
 			body: document.body,
@@ -14,22 +14,22 @@ var Irc = (function() {
 				return div;
 			}())
 		};
-        this.servers = [];
-        this.conns    = (addr) ? {
+		this.servers = [];
+		this.conns	= (addr) ? {
 			mintI: io.connect(addr + "/mintI"),
 			irc:   io.connect(addr + "/irc") 	
 		}: {};
-        this.handle();
-        this.el = elements;
+		this.handle();
+		this.el = elements;
 
 		this.addServer = function(serv) {
-		    var exists = _.find(this.servers, function(server) {
-		        return server.addr === serv.addr;
-		    });
-		    if (!exists) {
-		        this.servers.push(serv);
-		        _(this).emit("new-server", [serv])
-		    }
+			var exists = _.find(this.servers, function(server) {
+				return server.addr === serv.addr;
+			});
+			if (!exists) {
+				this.servers.push(serv);
+				_(this).emit("new-server", [serv])
+			}
 		};
 
 		this.getServer = function(serv) {
@@ -40,7 +40,7 @@ var Irc = (function() {
 				return serv[0];
 			}
 		};
-    }
+	}
 }());
 
 function getLongestSubstr(string) {
@@ -106,26 +106,26 @@ Irc.prototype.handle = function() {
 	});
 	for (var conn in this.conns) {
 		var _conn  = _(this.conns[conn]),
-	    	context = this;
+			context = this;
 		_conn.on("open", function(e) {
-		    console.log("Connection open!");
+			console.log("Connection open!");
 		});
 		_conn.on("close", function(e) {
-		    console.log("Connection closed.");
+			console.log("Connection closed.");
 		});
 		_conn.on("message", function(info) {
 			console.log(info);
-		    var serv = _.find(context.servers, function(serv) {
-		        return serv.addr === info.addr;
-		    });
-		    if (serv) {
-		        serv.addMessage(info.msg);
-		    } else {
-		        console.log("Data sent with server " + info.Server + ", but no such server found.");
-		    }
+			var serv = _.find(context.servers, function(serv) {
+				return serv.addr === info.addr;
+			});
+			if (serv) {
+				serv.addMessage(info.msg);
+			} else {
+				console.log("Data sent with server " + info.Server + ", but no such server found.");
+			}
 		});
 		_conn.on("error", function(e) {
-		    console.log("Connection error: ", e);
+			console.log("Connection error: ", e);
 		});
 	}
 };

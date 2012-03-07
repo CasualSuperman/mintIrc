@@ -1,5 +1,5 @@
 var Message = (function() {
-    return function(info) {
+	return function(info) {
 		if (info.join) {
 			console.log(info.nick + " has joined.");
 			this.time = new Date();
@@ -23,8 +23,7 @@ var Message = (function() {
 			this.user = new User(info.nick);
 		} else {
 			console.log("Unknown type.");
-			debugger;
 		}
 		return this;
-    };
+	};
 }());

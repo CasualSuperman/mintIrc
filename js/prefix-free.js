@@ -22,9 +22,9 @@ var self = window.StyleFix = {
 		}
 
 		var url = link.href || link.getAttribute('data-href'),
-		    base = url.replace(/[^\/]+$/, ''),
-		    parent = link.parentNode,
-		    xhr = new XMLHttpRequest();
+			base = url.replace(/[^\/]+$/, ''),
+			parent = link.parentNode,
+			xhr = new XMLHttpRequest();
 		
 		xhr.open('GET', url);
 
@@ -227,7 +227,7 @@ var self = window.PrefixFree = {
 					parts.pop();
 					
 					var shorthand = parts.join('-'),
-					    shorthandDOM = StyleFix.camelCase(shorthand);
+						shorthandDOM = StyleFix.camelCase(shorthand);
 
 					if(shorthandDOM in dummy) {
 						pushUnique(properties, shorthand);

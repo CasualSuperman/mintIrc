@@ -16,7 +16,7 @@ var MessageView = (function() {
 			var text = msg.text;
 			var message = td("message", text);
 			message.innerHTML =
-				message.innerHTML.replace(url, "<a href='$&'>$&</a>");
+				message.innerHTML.replace(url, "<a href='$&' target='_blank'>$&</a>");
 			el = _.dom.create("tr", classes, [
 				td("time", msg.time.toLocaleTimeString()),
 				td("sender", (msg.user) ? msg.user.nick : ""),

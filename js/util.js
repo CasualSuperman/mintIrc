@@ -136,7 +136,7 @@
 		} else if (arguments.length === 2) {
 			to = from;
 		}
-		console.log(node, from, to);
+
 		if (node.selectionStart !== undefined) {
 			console.log("Using selection DOM properties.");
 			node.setSelectionRange(from, to);

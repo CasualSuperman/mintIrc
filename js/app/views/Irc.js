@@ -106,8 +106,11 @@ var IrcView = (function() {
 						this.value = inspect +
 							matches[0].substring(match[0].length,
 												 matches[0].length) +
-							this.value.substring(lookAt, this.value.length);
-						_.dom.select(this, lookAt, matches[0].length - match[0].length + lookAt);
+							this.value.substring(lookAt, this.value.length) +
+							": ";
+						_.dom.select(this, this.value.length);
+					} else if (matches.length > 1) {
+						console.log(matches);
 					}
 				}
 				_.event.cancel(e);

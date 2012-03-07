@@ -138,16 +138,13 @@
 		}
 
 		if (node.selectionStart !== undefined) {
-			console.log("Using selection DOM properties.");
 			node.setSelectionRange(from, to);
 		} else if (node.createTextRange) {
-			console.log("Using textRange.");
 			var range = node.createTextRange();
 			range.moveStart('character', from);
 			range.moveEnd('character', to);
 			range.select();
 		} else {
-			console.log("No supported method found.");
 			node.focus();
 		}
 	}
@@ -187,7 +184,6 @@
 	};
 	_.event = {
 		cancel: function(e) {
-			console.log(e);
 			if (e && e.stopPropagation) {
 				e.preventDefault();
 				e.stopPropagation();

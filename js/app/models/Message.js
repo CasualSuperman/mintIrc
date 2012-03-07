@@ -16,11 +16,27 @@ var Message = (function() {
 			this.global = true;
 			this.text = info.nick + " has left: " + info.reason;
 		} else if (info.msg) {
-			this.time = new Date();
-			this.serv = info.addr;
-			this.text = info.msg;
-			this.chan = info.chan;
-			this.user = new User(info.nick);
+			if (info.action) {
+				this.time = new Date();
+				this.serv = info.addr;
+				this.chan = info.chan;
+				this.text = info.msg;
+				this.user = new User(info.nick);
+				this.action = true;
+			} else if(info.msg.indexOf("\u0001ACTION") === 0) {
+				this.time = new Date();
+				this.serv = info.addr;
+				this.chan = info.chan;
+				this.text = info.msg.slice(8);
+				this.user = new User(info.nick);
+				this.action = true;
+			} else {
+				this.time = new Date();
+				this.serv = info.addr;
+				this.text = info.msg;
+				this.chan = info.chan;
+				this.user = new User(info.nick);
+			}
 		} else {
 			console.log("Unknown type.");
 		}

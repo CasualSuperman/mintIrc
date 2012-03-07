@@ -9,6 +9,7 @@ tr {
 		padding-left: 1em;
 	}
 	&.status {
+		background-color: @grey;
 		color: @content-grey;
 
 		&.mono {
@@ -17,12 +18,10 @@ tr {
 		}
 
 		td {
-			background-color: @grey;
 			border-top: 4px solid @grey;
 			color: @content-grey;
-			&.sender {
-				padding-right: 0;
-			}
+			position: relative;
+			left: 3em;
 		}
 	}
 	&.mentioned .sender {

@@ -9,12 +9,9 @@ var MessageView = (function() {
 			el;
 		if (msg.global) {
 			classes.push("status");
-			var temp = td("sender");
-			temp.colSpan = 2;
-			el = _.dom.create("tr", classes, [
-				temp,
-				td("message", msg.text)
-			]);
+			var temp = td("message", msg.text);
+			temp.colSpan = 3;
+			el = _.dom.create("tr", classes, temp);
 		} else if (msg.user) {
 			var text = msg.text;
 			var message = td("message", text);

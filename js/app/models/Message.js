@@ -10,6 +10,10 @@ var Message = (function() {
 			this.global = true;
 			this.text = info.nick + " changed the topic to: " + info.topic;
 			this.user = new User(info.nick);
+		} else if (info.part) {
+			this.time = new Date();
+			this.global = true;
+			this.text = info.nick + " has left: " + info.reason;
 		} else if (info.reason) {
 			this.time = new Date();
 			this.global = true;

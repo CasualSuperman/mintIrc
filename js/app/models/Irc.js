@@ -93,6 +93,8 @@ Irc.prototype.handle = function() {
 	});
 	irc.on('part', function(info) {
 		var server = app.getServer(info.addr);
+		info.part = true;
+		console.log("Part", info);
 		if (info.nick === server.nick) {
 			server.removeChan(info.chan);
 		} else {

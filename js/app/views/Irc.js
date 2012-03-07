@@ -89,7 +89,28 @@ var IrcView = (function() {
 
 		var handleInput = function(e) {
 			if (e.keyCode === keys["tab"]) {
-				var match = /\b(.*)$/.apply(this.value);
+				var lookAt = _.dom.cursorPos(this);
+				var inspect = this.value.substring(0, lookAt);
+				var match = /\w*?$/.exec(inspect);
+				var users = obj.getActiveServerView().getActiveChanView().chan.users;
+				var matches = [];
+				if (match) {
+					var frag = match[0].toLowerCase();
+					_.forEach(users, function(mod, nick) {
+						if (nick.toLowerCase().indexOf(frag) === 0) {
+							matches.push(nick);
+						}
+					});
+					matches.sort();
+					if (matches.length === 1) {
+						this.value = inspect +
+							matches[0].substring(match[0].length,
+												 matches[0].length) +
+							this.value.substring(lookAt, this.value.length);
+						_.dom.select(this, lookAt, matches[0].length - match[0].length + lookAt);
+					}
+				}
+				_.event.cancel(e);
 			} else if (e.keyCode === keys["enter"]) {
 				var server  = obj.getActiveServerView();
 				var channel = server.getActiveChanView();

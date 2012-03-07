@@ -152,6 +152,26 @@
 		}
 	}
 
+	function cursorPosition(node) {
+		if (node.selectionStart) {
+			return node.selectionStart;
+		} else if (!document.selection) {
+			return 0;
+		}
+
+		var c   = 0x01,
+			sel = document.selection.createRange(),
+			dul = sel.duplicate(),
+			len = 0;
+
+		dul.moveToElementText(node);
+		sel.text = c;
+		len = dul.text.indexOf(c);
+		sel.moveStart('character', -1);
+		sel.text = "";
+		return len;
+	}
+
     _.dom = {
         create:   createNode,
         template: templateNode,
@@ -162,7 +182,8 @@
         hide:         hide,
         append: appendThings,
         prependChild: prepend,
-		select: select
+		select: select,
+		cursorPos: cursorPosition
     };
 	_.event = {
 		cancel: function(e) {

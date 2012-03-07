@@ -3,16 +3,16 @@ var IrcView = (function() {
 		append = _.dom.append;
 	function setup(obj, base) {
 		var elements = {
-				body: document.body,
-				modal: dom.create("div"),
-				modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
-				modServ: new ModalServWindow(), //dom.create("div", ["modal", "newServ"]),
-				servList: dom.create("ul", ["servs"]),
-				newServ: dom.create("li", ["serv", "nonitem"], "+"),
-				newChan: dom.create("li", ["chan", "nonitem"], "+"),
-				header: dom.create("header", ["connection-list"]),
-				input: dom.create("input", ["chat", "is-selectable"]),
-				gradient: dom.create("div")
+			body: document.body,
+			modal: dom.create("div"),
+			modChan: new ModalChanWindow(), //dom.create("div", ["modal", "newChan"]),
+			modServ: new ModalServWindow(), //dom.create("div", ["modal", "newServ"]),
+			servList: dom.create("ul", ["servs"]),
+			newServ: dom.create("li", ["serv", "nonitem"], "+"),
+			newChan: dom.create("li", ["chan", "nonitem"], "+"),
+			header: dom.create("header", ["connection-list"]),
+			input: dom.create("input", ["chat", "is-selectable"]),
+			gradient: dom.create("div")
 		};
 		elements.body.appendChild(elements.modal);
 		elements.gradient.id = "gradient";

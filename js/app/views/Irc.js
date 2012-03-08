@@ -205,6 +205,15 @@ var IrcView = (function() {
 			elements.gradient.title = "Set by " + newChan.chan.topic.nick;
 		});
 
+		_.on("disconnected", function() {
+			context.getActiveServerView().getActiveChanView().chan
+				.addMessage(new Message({
+					msg: "Disconnected.",
+					action: true;
+					nick: "",
+				});
+		});
+
 		/* Local event handling. */
 		_(irc).on("new-server", function(server) {
 			var view = new ServerView(server);

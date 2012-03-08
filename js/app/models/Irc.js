@@ -110,6 +110,9 @@ Irc.prototype.handle = function() {
 		var chan = app.getServer(info.addr).getChan(info.chan);
 		chan.addUsers(info.names);
 	});
+	irc.on('disconnect', function() {
+		_.emit("disconnected", []);
+	});
 	for (var conn in this.conns) {
 		var _conn  = _(this.conns[conn]),
 			context = this;

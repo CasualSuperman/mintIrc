@@ -7,3 +7,4 @@ TODO
 *	People quitting
 *	Changing / setting nicks.
 *	Join and Connect dialogs.
+*	Investigate IRC encryption.

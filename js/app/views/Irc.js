@@ -211,7 +211,7 @@ var IrcView = (function() {
 					msg: "Disconnected.",
 					action: true,
 					nick: ""
-				});
+				}));
 		});
 
 		/* Local event handling. */

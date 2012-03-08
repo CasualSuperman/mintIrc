@@ -209,8 +209,8 @@ var IrcView = (function() {
 			context.getActiveServerView().getActiveChanView().chan
 				.addMessage(new Message({
 					msg: "Disconnected.",
-					action: true;
-					nick: "",
+					action: true,
+					nick: ""
 				});
 		});
 

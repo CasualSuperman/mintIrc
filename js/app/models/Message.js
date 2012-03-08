@@ -14,6 +14,10 @@ var Message = (function() {
 			this.time = new Date();
 			this.global = true;
 			this.text = info.nick + " has left: " + info.reason;
+		} else if (info.quit) {
+			this.time = new Date();
+			this.global = true;
+			this.text = info.nick + " has left: " + info.reason;
 		} else if (info.reason) {
 			this.time = new Date();
 			this.global = true;

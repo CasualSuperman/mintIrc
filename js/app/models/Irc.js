@@ -84,17 +84,21 @@ Irc.prototype.handle = function() {
 	});
 	irc.on('message', function(info) {
 		app.getServer(info.addr).addMessage(new Message(info));
-			//.getChan(info.chan)
-			//.addMessage(new Message(info));
 	});
 	irc.on('topic', function(info) {
 		var chan = app.getServer(info.addr).getChan(info.chan);
 		chan.setTopic(info.topic, info.nick);
 	});
+	irc.on('quit', function(info) {
+		var server = app.getServer(info.addr);
+		info.quit = true;
+		_.forEach(info.chans, function(chan) {
+			server.getChan(chan).addMessage(new Message(info));
+		});
+	});
 	irc.on('part', function(info) {
 		var server = app.getServer(info.addr);
 		info.part = true;
-		console.log("Part", info);
 		if (info.nick === server.nick) {
 			server.removeChan(info.chan);
 		} else {

@@ -17,6 +17,7 @@ var IrcView = (function() {
 		elements.body.appendChild(elements.modal);
 		elements.gradient.id = "gradient";
 		elements.modal.id = "modal";
+		elements.input.autofocus = true;
 		obj.el = elements;
 
 		obj.history = {

@@ -1,9 +1,9 @@
 /*!
- * goIRC Frontend v0.1.0
+ * goIRC Frontend v0.4.0
  *
- * Copyright 2011, Robert Wertman
+ * Copyright 2012, Robert Wertman
  *
- * Date: Thu Apr 07 14:26:07 2011 -0500
+ * Date: Wed Mar 07 20:52:00 2012 -0500
  */
 window.App  = new Irc(":33111"); // 33111
 window.View = new IrcView(window.App);

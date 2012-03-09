@@ -40,6 +40,8 @@ var Irc = (function() {
 				return serv[0];
 			}
 		};
+
+		this.serverNames = {};
 	}
 }());
 
@@ -68,7 +70,7 @@ Irc.prototype.handle = function() {
 	var irc = this.conns.irc;
 	irc.on('registered', function (info) {
 		app.addServer(new Server({
-			name: getLongestSubstr(info.addr),
+			name: app.serverNames[info.addr] || getLongestSubstr(info.addr),
 			addr: info.addr,
 			nick: info.nick,
 		}));
@@ -141,4 +143,8 @@ Irc.prototype.handle = function() {
 
 Irc.prototype.connect = function(network, channels) {
 	this.conns.irc.emit("connect", {addr: network, chans: channels || []});
+};
+
+Irc.prototype.serverName = function(addr, name) {
+	this.serverNames[addr] = name;
 };

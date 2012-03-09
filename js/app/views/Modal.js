@@ -15,14 +15,24 @@ var ModalChanWindow = (function() {
 		var join = create("input", [], undefined, {type: "button", value: "Join"});
 
 		var doJoin = function() {
-			App.connect(addr_input.value, []);
+			App.join(View.getActiveServerView().server.addr,chan_input.value);
 			View.hideModal();
+		};
+
+		var doType = function(e) {
+			if (e.keyCode === 13) {
+				if (chan_input.value) {
+					doJoin();
+				}
+			}
 		};
 
 		if (join.addEventListener) {
 			join.addEventListener("click", doJoin);
+			chan_input.addEventListener("keydown", doType);
 		} else {
 			join.attachEvent("onclick", doJoin);
+			chan_input.attachEvent("onkeydown", doType);
 		}
 
 		append(frag, [

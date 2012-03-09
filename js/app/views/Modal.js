@@ -1,8 +1,41 @@
 var ModalChanWindow = (function() {
 	var create = _.dom.create;
+	var append = _.dom.append;
 	return function() {
 		var frag = document.createDocumentFragment();
-		frag.appendChild(create("h1", [], "Join"));
+
+		var chan_lbl = create("label", [], "chan", {for: "chan-name"});
+		var chan_input = create("input", [], [], {
+			type: "text",
+			id: "chan-name",
+			name: "chan-name",
+			autofocus: true
+		});
+
+		var join = create("input", [], undefined, {type: "button", value: "Join"});
+
+		var doJoin = function() {
+			App.connect(addr_input.value, []);
+			View.hideModal();
+		};
+
+		if (join.addEventListener) {
+			join.addEventListener("click", doJoin);
+		} else {
+			join.attachEvent("onclick", doJoin);
+		}
+
+		append(frag, [
+			create("h1", [], "Join"),
+			create("p", [], [
+				chan_lbl,
+				chan_input
+			]),
+			create("p", [], [
+				join
+			]),
+		]);
+
 		this.el = create("div", "modal", frag);
 		this.el.id = "newChan";
 		return this;

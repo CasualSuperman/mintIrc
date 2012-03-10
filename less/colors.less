@@ -20,6 +20,7 @@
 /* Accent Colors */
 @accent: `Metro.ui.config.accentColor`;
 @light-accent: fadeout(@accent, 80%);
+
 .accent {
 	color: @accent;
 }
@@ -27,3 +28,15 @@
 .background {
 	background-color: @background;
 }
+
+@keyframes colors {
+	from {
+		color: inherit;
+		text-shadow: 0 0 20% fadeout(@accent, 100%);
+	}
+	to {
+		color: @accent;
+		text-shadow: 0 0 20% fadeout(@accent, 60%);
+	}
+}
+

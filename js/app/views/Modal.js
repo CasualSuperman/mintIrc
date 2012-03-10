@@ -15,7 +15,7 @@ var ModalChanWindow = (function() {
 		var join = create("input", [], undefined, {type: "button", value: "Join"});
 
 		var doJoin = function() {
-			App.join(View.getActiveServerView().server.addr,chan_input.value);
+			App.join(View.getActiveServerView().serv.addr, chan_input.value);
 			View.hideModal();
 		};
 
@@ -113,7 +113,7 @@ var ModalServWindow = (function() {
 
 		var doConnect = function() {
 				App.serverName(addr_input.value, name_input.value);
-				App.connect(addr_input.value, []);
+				App.connect(addr_input.value, [], nick_input.value);
 				View.hideModal();
 		};
 

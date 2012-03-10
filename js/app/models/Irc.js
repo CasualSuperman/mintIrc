@@ -16,7 +16,6 @@ var Irc = (function() {
 		};
 		this.servers = [];
 		this.conns	= (addr) ? {
-			mintI: io.connect(addr + "/mintI"),
 			irc:   io.connect(addr + "/irc") 	
 		}: {};
 		this.handle();
@@ -115,34 +114,18 @@ Irc.prototype.handle = function() {
 	irc.on('disconnect', function() {
 		_.emit("disconnected", []);
 	});
-	for (var conn in this.conns) {
-		var _conn  = _(this.conns[conn]),
-			context = this;
-		_conn.on("open", function(e) {
-			console.log("Connection open!");
-		});
-		_conn.on("close", function(e) {
-			console.log("Connection closed.");
-		});
-		_conn.on("message", function(info) {
-			console.log(info);
-			var serv = _.find(context.servers, function(serv) {
-				return serv.addr === info.addr;
-			});
-			if (serv) {
-				serv.addMessage(info.msg);
-			} else {
-				console.log("Data sent with server " + info.Server + ", but no such server found.");
-			}
-		});
-		_conn.on("error", function(e) {
-			console.log("Connection error: ", e);
-		});
-	}
 };
 
-Irc.prototype.connect = function(network, channels) {
-	this.conns.irc.emit("connect", {addr: network, chans: channels || []});
+Irc.prototype.join = function(network, chan) {
+	this.conns.irc.emit("join", {addr: network, chan: chan});
+};
+
+Irc.prototype.connect = function(network, channels, nick) {
+	this.conns.irc.emit("connect", {
+		addr: network,
+		chans: channels || [],
+		nick: nick
+	});
 };
 
 Irc.prototype.serverName = function(addr, name) {

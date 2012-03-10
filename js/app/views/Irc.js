@@ -121,11 +121,17 @@ var IrcView = (function() {
 				var addr	= server.serv.addr;
 				var chan	= channel.chan.name;
 				var msg	 = this.value;
+				var send = {
+					addr: addr,
+					chan: chan,
+					nick: server.serv.nick
+				};
 				if (msg.toLowerCase().indexOf("/me ") === 0) {
-					msg = msg.slice(4);
-					base.conns.irc.emit("action", {addr: addr, chan: chan, msg: msg});
+					send.msg = msg.slice(4);
+					base.conns.irc.emit("action", send);
 				} else {
-					base.conns.irc.emit("say", {addr: addr, chan: chan, msg: msg});
+					send.msg = msg;
+					base.conns.irc.emit("say", send);
 				}
 				obj.history.messages.unshift(msg);
 				obj.history.position = -1;

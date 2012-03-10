@@ -22,6 +22,7 @@ var Server = (function() {
 			if (!_(this.chans).any(function(chan) {
 				return chan.name === info.name;
 			})) {
+				info.nick = this.nick;
 				var chan = new Chan(info);
 				this.chans.push(chan);
 				_(this).emit("new-chan", [chan]);

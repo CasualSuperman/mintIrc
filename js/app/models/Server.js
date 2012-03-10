@@ -46,6 +46,11 @@ var Server = (function() {
 	}
 }());
 
+Server.prototype.changeNick = function(nick) {
+	this.nick = nick;
+	this._nick = new RegExp("\\b" + nick + "\\b", "i");
+};
+
 Server.prototype.addMessage = function(msg) {
 	this.addMessages([msg]);
 };

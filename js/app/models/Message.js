@@ -14,6 +14,10 @@ var Message = (function() {
 			this.time = new Date();
 			this.global = true;
 			this.text = info.nick + " has left: " + info.reason;
+		} else if (info.oldNick) {
+			this.global = true;
+			this.text = info.oldNick + " has changed their name to " + info.nick;
+			this.user = new User(info.nick);
 		} else if (info.msg) {
 			if (info.action) {
 				this.time = new Date();

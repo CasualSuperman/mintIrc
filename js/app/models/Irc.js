@@ -114,6 +114,20 @@ Irc.prototype.handle = function() {
 	irc.on('disconnect', function() {
 		_.emit("disconnected", []);
 	});
+	irc.on('nick', function(info) {
+		var serv = app.getServer(info.addr);
+		if (serv) {
+			if (serv.nick === info.oldNick) {
+				serv.changeNick(info.nick);
+			}
+			_.forEach(info.chans, function(chan) {
+				var chan = serv.getChan(chan);
+				if (chan) {
+					chan.addMessage(new Message(info));
+				}
+			});
+		}
+	});
 };
 
 Irc.prototype.join = function(network, chan) {

@@ -27,14 +27,6 @@ var ModalChanWindow = (function() {
 			}
 		};
 
-		if (join.addEventListener) {
-			join.addEventListener("click", doJoin);
-			chan_input.addEventListener("keydown", doType);
-		} else {
-			join.attachEvent("onclick", doJoin);
-			chan_input.attachEvent("onkeydown", doType);
-		}
-
 		append(frag, [
 			create("h1", [], "Join"),
 			create("p", [], [
@@ -48,6 +40,18 @@ var ModalChanWindow = (function() {
 
 		this.el = create("div", "modal", frag);
 		this.el.id = "newChan";
+		
+		
+		if (join.addEventListener) {
+			this.el.addEventListener("click", _.event.cancel);
+			join.addEventListener("click", doJoin);
+			chan_input.addEventListener("keydown", doType);
+		} else {
+			this.el.attachEvent("onclick", _.event.cancel);
+			join.attachEvent("onclick", doJoin);
+			chan_input.attachEvent("onkeydown", doType);
+		}
+
 		return this;
 	};
 }());

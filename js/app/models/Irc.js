@@ -71,7 +71,7 @@ Irc.prototype.handle = function() {
 		app.addServer(new Server({
 			name: app.serverNames[info.addr] || getLongestSubstr(info.addr),
 			addr: info.addr,
-			nick: info.nick,
+			nick: info.nick
 		}));
 	});
 	irc.on('join', function(info) {

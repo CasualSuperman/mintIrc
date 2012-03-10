@@ -4,7 +4,8 @@ var ModalChanWindow = (function() {
 	return function() {
 		var frag = document.createDocumentFragment();
 
-		var chan_lbl = create("label", [], "chan", {for: "chan-name"});
+		var chan_lbl = create("label", [], "chan");
+		chan_lbl["for"] = "chan-name";
 		var chan_input = create("input", [], [], {
 			type: "text",
 			id: "chan-name",
@@ -35,7 +36,7 @@ var ModalChanWindow = (function() {
 			]),
 			create("p", [], [
 				join
-			]),
+			])
 		]);
 
 		this.el = create("div", "modal", frag);
@@ -61,20 +62,23 @@ var ModalServWindow = (function() {
 	var append = _.dom.append;
 	return function() {
 		var frag = document.createDocumentFragment();
-		var addr_lbl = create("label", [], "Server", {for: "serv-addr"});
+		var addr_lbl = create("label", [], "Server");
+		addr_lbl["for"] = "serv-addr";
 		var addr_input = create("input", [], [], {
 			type: "text",
 			name: "addr",
 			id: "serv-addr",
 			autofocus: true
 		});
-		var name_lbl = create("label", [], "Name", {for: "serv-name"});
+		var name_lbl = create("label", [], "Name");
+		addr_lbl["for"] = "serv-name";
 		var name_input = create("input", [], [], {
 			type: "text",
 			name: "name",
 			id: "serv-name"
 		});
-		var nick_lbl = create("label", [], "Nick", {for: "serv-nick"});
+		var nick_lbl = create("label", [], "Nick");
+		nick_lbl["for"] = "serv-nick";
 		var nick_input = create("input", [], [], {
 			name: "nick",
 			id: "serv-nick"
@@ -84,7 +88,7 @@ var ModalServWindow = (function() {
 			create("h1", [], "Connect"),
 			create("p", [], [
 				addr_lbl,
-				addr_input,
+				addr_input
 			]),
 			create("p", [], [
 				name_lbl,

@@ -29,6 +29,7 @@ var IrcView = (function() {
 		var hideModal = obj.hideModal = function() {
 			dom.removeClass(elements.modal, "show");
 			dom.clear(elements.modal);
+			elements.input.focus();
 		};
 
 		if (elements.modal.addEventListener) {

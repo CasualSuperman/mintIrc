@@ -81,6 +81,7 @@ var ModalServWindow = (function() {
 		nick_lbl["for"] = "serv-nick";
 		var nick_input = create("input", [], [], {
 			name: "nick",
+			type: "text",
 			id: "serv-nick"
 		});
 		var connect = create("input", [], undefined, {type: "button", value: "Connect"});

@@ -5,4 +5,41 @@
 	h1 {
 		color: @accent;
 	}
+
+	p {
+		color: @content-grey;
+		clear: both;
+	}
+
+	label {
+		display: block;
+		float: left;
+		font-size: 125%;
+		line-height: 1.75em;
+		margin-right: 1em;
+		text-align: right;
+		width: 80px;
+	}
+
+	input {
+		background-color: @grey;
+		border-style: none;
+
+		&[type="text"] {
+			float: left;
+			font-size: 150%;
+			margin-bottom: 1em;
+
+			&:active {
+				background-color: @header-grey;
+			}
+		}
+
+		&[type="button"] {
+			border: 1px solid @header-grey;
+			color: @content;
+			font-size: 125%;
+			padding: 0.25em;
+		}
+	}
 }
